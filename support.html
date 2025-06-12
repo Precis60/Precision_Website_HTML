@@ -16,7 +16,8 @@
                 Precision Cabling &<br>Automation
             </span>
         </a>
-        <div class="header-right">
+        <button class="menu-toggle" id="menuToggle">☰ Menu</button>
+        <div class="header-right" id="dropdownMenu">
             <a href="index.html">Home</a>
             <a href="services.html">Services</a>
             <a href="projects.html">Projects</a>
@@ -155,6 +156,23 @@
                 ABN 94 921 400 822
             </div>
         </footer>
+        <script>
+            document.getElementById('menuToggle').addEventListener('click', function () {
+                var menu = document.getElementById('dropdownMenu');
+                if (menu.style.display === 'flex') {
+                    menu.style.display = 'none';
+                } else {
+                    menu.style.display = 'flex';
+                }
+            });
+        </script>
+        <script>
+            const menuToggle = document.querySelector('.menu-toggle');
+            const headerRight = document.querySelector('.header-right');
+            menuToggle.addEventListener('click', () => {
+                headerRight.classList.toggle('open');
+            });
+        </script>
 </body>
 
 </html>
