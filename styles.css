@@ -236,6 +236,18 @@ body {
     margin-top: 0;
 }
 
+.section-bg {
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin: 40px auto;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 @media (max-width: 900px) {
     .grid-sections {
         grid-template-columns: 1fr 1fr;
