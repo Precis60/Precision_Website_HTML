@@ -481,44 +481,64 @@
         }
 
         /* Home Schooling Categories */
-        .category-math-lesson {
-            background-color: #4caf50;
-        }
-
-        .category-science-lesson {
-            background-color: #2196f3;
-        }
-
-        .category-english-lesson {
-            background-color: #9c27b0;
-        }
-
-        .category-history-lesson {
-            background-color: #795548;
-        }
-
-        .category-art-lesson {
+        .category-art {
             background-color: #e91e63;
         }
 
-        .category-music-lesson {
-            background-color: #ff5722;
-        }
-
-        .category-pe-lesson {
-            background-color: #4caf50;
-        }
-
-        .category-field-trip {
+        .category-basketball {
             background-color: #ff9800;
         }
 
-        .category-exam-test {
-            background-color: #f44336;
+        .category-business-economics {
+            background-color: #1a237e;
         }
 
-        .category-project-work {
+        .category-concept {
+            background-color: #9c27b0;
+        }
+
+        .category-cooking {
+            background-color: #ff5722;
+        }
+
+        .category-engineering {
             background-color: #607d8b;
+        }
+
+        .category-football {
+            background-color: #4caf50;
+        }
+
+        .category-holiday-program {
+            background-color: #03dac6;
+        }
+
+        .category-day-off {
+            background-color: #795548;
+        }
+
+        .category-humanities {
+            background-color: #673ab7;
+        }
+
+        .category-ictdt {
+            background-color: #2196f3;
+        }
+
+        .category-legal-political {
+            background-color: #3f51b5;
+        }
+
+        .category-mathematics {
+            background-color: #009688;
+        }
+
+        .category-physical-education {
+            background-color: #8bc34a;
+        }
+
+        .category-science-world-news {
+            background-color: #ff5722;
         }
 
         .form-group select {
@@ -730,16 +750,21 @@
                                 <option value="entertainment">Entertainment</option>
                             </optgroup>
                             <optgroup label="Home Schooling">
-                                <option value="math-lesson">Math Lesson</option>
-                                <option value="science-lesson">Science Lesson</option>
-                                <option value="english-lesson">English Lesson</option>
-                                <option value="history-lesson">History Lesson</option>
-                                <option value="art-lesson">Art Lesson</option>
-                                <option value="music-lesson">Music Lesson</option>
-                                <option value="pe-lesson">PE Lesson</option>
-                                <option value="field-trip">Field Trip</option>
-                                <option value="exam-test">Exam/Test</option>
-                                <option value="project-work">Project Work</option>
+                                <option value="art">Art</option>
+                                <option value="basketball">Basketball</option>
+                                <option value="business-economics">Business & Economics</option>
+                                <option value="concept">Concept</option>
+                                <option value="cooking">Cooking</option>
+                                <option value="engineering">Engineering</option>
+                                <option value="football">Football</option>
+                                <option value="holiday-program">Holiday Program</option>
+                                <option value="day-off">Day Off</option>
+                                <option value="humanities">Humanities</option>
+                                <option value="ictdt">ICTDT</option>
+                                <option value="legal-political">Legal & Political</option>
+                                <option value="mathematics">Mathematics</option>
+                                <option value="physical-education">Physical Education</option>
+                                <option value="science-world-news">Science & World 24 Hours News</option>
                             </optgroup>
                         </select>
                     </div>
@@ -1052,21 +1077,26 @@
             'education': 'Education',
             'entertainment': 'Entertainment',
             // Home Schooling Categories
-            'math-lesson': 'Math Lesson',
-            'science-lesson': 'Science Lesson',
-            'english-lesson': 'English Lesson',
-            'history-lesson': 'History Lesson',
-            'art-lesson': 'Art Lesson',
-            'music-lesson': 'Music Lesson',
-            'pe-lesson': 'PE Lesson',
-            'field-trip': 'Field Trip',
-            'exam-test': 'Exam/Test',
-            'project-work': 'Project Work'
+            'art': 'Art',
+            'basketball': 'Basketball',
+            'business-economics': 'Business & Economics',
+            'concept': 'Concept',
+            'cooking': 'Cooking',
+            'engineering': 'Engineering',
+            'football': 'Football',
+            'holiday-program': 'Holiday Program',
+            'day-off': 'Day Off',
+            'humanities': 'Humanities',
+            'ictdt': 'ICTDT',
+            'legal-political': 'Legal & Political',
+            'mathematics': 'Mathematics',
+            'physical-education': 'Physical Education',
+            'science-world-news': 'Science & World 24 Hours News'
         };
 
         const businessCategories = ['centre-com-computers', 'commercial', 'daniel-allison', 'krongold-group', 'officework', 'peter-alla-lew', 'residential', 'rosie-lew', 'supply-demand', 'training-research', 'travel-time', 'website-marketing'];
         const personalCategories = ['appointment', 'family-time', 'vacation', 'fitness', 'hobbies', 'social', 'personal-task', 'health', 'education', 'entertainment'];
-        const homeSchoolingCategories = ['math-lesson', 'science-lesson', 'english-lesson', 'history-lesson', 'art-lesson', 'music-lesson', 'pe-lesson', 'field-trip', 'exam-test', 'project-work'];
+        const homeSchoolingCategories = ['art', 'basketball', 'business-economics', 'concept', 'cooking', 'engineering', 'football', 'holiday-program', 'day-off', 'humanities', 'ictdt', 'legal-political', 'mathematics', 'physical-education', 'science-world-news'];
 
         function switchView(view) {
             currentView = view;
