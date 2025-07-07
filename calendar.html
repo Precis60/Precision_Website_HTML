@@ -293,6 +293,14 @@
             box-sizing: border-box;
         }
 
+        .form-group input[placeholder] {
+            color: #999;
+        }
+
+        .form-group input[placeholder]:focus {
+            color: #333;
+        }
+
         .form-group textarea {
             resize: vertical;
             min-height: 80px;
@@ -747,6 +755,10 @@
                     <div class="form-group">
                         <label for="eventTitle">Title:</label>
                         <input type="text" id="eventTitle" name="eventTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventLocation">Location:</label>
+                        <input type="text" id="eventLocation" name="eventLocation" placeholder="Enter location (optional)">
                     </div>
                     <div class="form-group">
                         <label for="eventCategory">Category:</label>
@@ -1356,7 +1368,8 @@
                                     }
                                     
                                     appointmentSlot.classList.add(categoryType);
-                                    appointmentSlot.textContent = `${event.startTime}-${event.endTime} ${event.title}`;
+                                    const locationText = event.location ? ` @ ${event.location}` : '';
+                                    appointmentSlot.textContent = `${event.startTime}-${event.endTime} ${event.title}${locationText}`;
                                     appointmentSlot.setAttribute('data-event-id', event.id);
                                     appointmentSlot.addEventListener('click', function() {
                                         editEvent(event.id);
@@ -1477,7 +1490,8 @@
                                 }
                                 
                                 appointmentSlot.classList.add(categoryType);
-                                appointmentSlot.textContent = `${event.startTime}-${event.endTime} ${event.title}`;
+                                const locationText = event.location ? ` @ ${event.location}` : '';
+                                appointmentSlot.textContent = `${event.startTime}-${event.endTime} ${event.title}${locationText}`;
                                 appointmentSlot.setAttribute('data-event-id', event.id);
                                 appointmentSlot.addEventListener('click', function() {
                                     editEvent(event.id);
@@ -1543,6 +1557,7 @@
 
             const date = document.getElementById('eventDate').value;
             const title = document.getElementById('eventTitle').value;
+            const location = document.getElementById('eventLocation').value;
             const category = document.getElementById('eventCategory').value;
             const startTime = document.getElementById('eventStartTime').value;
             const endTime = document.getElementById('eventEndTime').value;
@@ -1563,6 +1578,7 @@
                             ...editingEvent,
                             date: date,
                             title: title,
+                            location: location,
                             category: category,
                             startTime: startTime,
                             endTime: endTime,
@@ -1580,6 +1596,7 @@
                         id: Date.now(),
                         date: date,
                         title: title,
+                        location: location,
                         category: category,
                         startTime: startTime,
                         endTime: endTime,
@@ -1611,6 +1628,7 @@
             // Populate form with event data
             document.getElementById('eventDate').value = event.date;
             document.getElementById('eventTitle').value = event.title;
+            document.getElementById('eventLocation').value = event.location || '';
             document.getElementById('eventCategory').value = event.category;
             document.getElementById('eventStartTime').value = event.startTime;
             document.getElementById('eventEndTime').value = event.endTime;
@@ -1704,6 +1722,7 @@
 
                 const categoryName = categories[event.category] || event.category;
                 const timeInfo = event.startTime && event.endTime ? `${event.startTime} - ${event.endTime}` : 'All Day';
+                const locationInfo = event.location ? event.location : '';
 
                 eventItem.innerHTML = `
                     <div class="event-actions">
@@ -1715,7 +1734,7 @@
                         <span class="event-category category-${event.category}">${categoryName}</span>
                         ${event.title}
                     </div>
-                    <div class="event-time" style="color: #666; font-size: 14px; margin-bottom: 5px;">${timeInfo}</div>
+                    <div class="event-time" style="color: #666; font-size: 14px; margin-bottom: 5px;">${timeInfo}${locationInfo ? ` | 📍 ${locationInfo}` : ''}</div>
                     <div class="event-description">${event.description || 'No description'}</div>
                 `;
 
