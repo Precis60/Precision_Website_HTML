@@ -831,54 +831,63 @@
             dayHeader.textContent = `${dayNames[currentDate.getDay()]} ${currentDate.getDate()}`;
             calendarGrid.appendChild(dayHeader);
             
-            // Add time slots and day column
+            // Get events for this day
+            const dayEvents = events.filter(event => {
+                const eventDate = new Date(event.date);
+                return eventDate.toDateString() === currentDate.toDateString();
+            });
+            
+            // Add 15-minute time slots for 24 hours (96 slots total)
             for (let hour = 0; hour < 24; hour++) {
-                // Add time slot
-                const timeSlot = document.createElement('div');
-                timeSlot.classList.add('time-slot');
-                timeSlot.textContent = `${hour.toString().padStart(2, '0')}:00`;
-                calendarGrid.appendChild(timeSlot);
-                
-                // Add day column
-                const dayColumn = document.createElement('div');
-                dayColumn.classList.add('day-column');
-                
-                // Add events for this hour
-                const dayEvents = events.filter(event => {
-                    const eventDate = new Date(event.date);
-                    return eventDate.toDateString() === currentDate.toDateString();
-                });
-                
-                dayEvents.forEach(event => {
-                    if (event.startTime) {
-                        const startHour = parseInt(event.startTime.split(':')[0]);
-                        const startMinute = parseInt(event.startTime.split(':')[1]);
-                        const endHour = parseInt(event.endTime.split(':')[0]);
-                        const endMinute = parseInt(event.endTime.split(':')[1]);
-                        
-                        if (startHour === hour) {
-                            const appointmentSlot = document.createElement('div');
-                            appointmentSlot.classList.add('appointment-slot');
-                            appointmentSlot.classList.add(businessCategories.includes(event.category) ? 'business' : 'personal');
-                            appointmentSlot.textContent = `${event.startTime}-${event.endTime} ${event.title}`;
+                for (let minute = 0; minute < 60; minute += 15) {
+                    // Add time slot
+                    const timeSlot = document.createElement('div');
+                    timeSlot.classList.add('time-slot');
+                    timeSlot.textContent = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+                    calendarGrid.appendChild(timeSlot);
+                    
+                    // Add day column for this 15-minute slot
+                    const dayColumn = document.createElement('div');
+                    dayColumn.classList.add('day-column');
+                    
+                    // Check if any events start in this 15-minute slot
+                    dayEvents.forEach(event => {
+                        if (event.startTime) {
+                            const startHour = parseInt(event.startTime.split(':')[0]);
+                            const startMinute = parseInt(event.startTime.split(':')[1]);
+                            const endHour = parseInt(event.endTime.split(':')[0]);
+                            const endMinute = parseInt(event.endTime.split(':')[1]);
                             
-                            // Calculate duration in hours
-                            const duration = (endHour - startHour) + (endMinute - startMinute) / 60;
-                            const heightPerHour = 50; // Height of each hour slot
-                            
-                            appointmentSlot.style.top = `${(startMinute / 60) * heightPerHour}px`;
-                            appointmentSlot.style.left = '2px';
-                            appointmentSlot.style.right = '2px';
-                            appointmentSlot.style.height = `${duration * heightPerHour - 2}px`;
-                            appointmentSlot.style.backgroundColor = businessCategories.includes(event.category) ? 'rgba(26, 35, 126, 0.3)' : 'rgba(255, 152, 0, 0.3)';
-                            appointmentSlot.style.border = `1px solid ${businessCategories.includes(event.category) ? '#1a237e' : '#ff9800'}`;
-                            
-                            dayColumn.appendChild(appointmentSlot);
+                            // Check if this event starts in the current 15-minute slot
+                            if (startHour === hour && startMinute === minute) {
+                                const appointmentSlot = document.createElement('div');
+                                appointmentSlot.classList.add('appointment-slot');
+                                appointmentSlot.classList.add(businessCategories.includes(event.category) ? 'business' : 'personal');
+                                appointmentSlot.textContent = `${event.startTime}-${event.endTime} ${event.title}`;
+                                
+                                // Calculate duration in 15-minute increments
+                                const startTotalMinutes = startHour * 60 + startMinute;
+                                const endTotalMinutes = endHour * 60 + endMinute;
+                                const durationMinutes = endTotalMinutes - startTotalMinutes;
+                                const durationSlots = durationMinutes / 15;
+                                
+                                const heightPerSlot = 40; // Height of each 15-minute slot
+                                
+                                appointmentSlot.style.top = '2px';
+                                appointmentSlot.style.left = '2px';
+                                appointmentSlot.style.right = '2px';
+                                appointmentSlot.style.height = `${durationSlots * heightPerSlot - 4}px`;
+                                appointmentSlot.style.backgroundColor = businessCategories.includes(event.category) ? 'rgba(26, 35, 126, 0.3)' : 'rgba(255, 152, 0, 0.3)';
+                                appointmentSlot.style.border = `1px solid ${businessCategories.includes(event.category) ? '#1a237e' : '#ff9800'}`;
+                                appointmentSlot.style.zIndex = '10';
+                                
+                                dayColumn.appendChild(appointmentSlot);
+                            }
                         }
-                    }
-                });
-                
-                calendarGrid.appendChild(dayColumn);
+                    });
+                    
+                    calendarGrid.appendChild(dayColumn);
+                }
             }
         }
 
