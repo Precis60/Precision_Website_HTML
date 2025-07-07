@@ -108,17 +108,22 @@
 
         .time-slot {
             background-color: #f9f9f9;
-            padding: 10px 5px;
+            padding: 8px 5px;
             text-align: center;
-            font-size: 12px;
+            font-size: 11px;
             border-bottom: 1px solid #ddd;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .week-day-column,
         .day-column {
             background-color: white;
             position: relative;
-            min-height: 600px;
+            min-height: 50px;
+            border-bottom: 1px solid #eee;
         }
 
         .week-day-header {
@@ -636,7 +641,6 @@
         }
 
         function generateMonthView() {
-        function generateMonthView() {
             const monthYear = document.getElementById('monthYear');
             const calendarGrid = document.getElementById('calendarGrid');
             
@@ -774,17 +778,27 @@
                     dayEvents.forEach(event => {
                         if (event.startTime) {
                             const startHour = parseInt(event.startTime.split(':')[0]);
+                            const startMinute = parseInt(event.startTime.split(':')[1]);
                             const endHour = parseInt(event.endTime.split(':')[0]);
+                            const endMinute = parseInt(event.endTime.split(':')[1]);
                             
-                            if (startHour <= hour && hour < endHour) {
+                            if (startHour === hour) {
                                 const appointmentSlot = document.createElement('div');
                                 appointmentSlot.classList.add('appointment-slot');
                                 appointmentSlot.classList.add(businessCategories.includes(event.category) ? 'business' : 'personal');
                                 appointmentSlot.textContent = `${event.startTime}-${event.endTime} ${event.title}`;
-                                appointmentSlot.style.top = '0';
+                                
+                                // Calculate duration in hours
+                                const duration = (endHour - startHour) + (endMinute - startMinute) / 60;
+                                const heightPerHour = 50; // Height of each hour slot
+                                
+                                appointmentSlot.style.top = `${(startMinute / 60) * heightPerHour}px`;
                                 appointmentSlot.style.left = '2px';
                                 appointmentSlot.style.right = '2px';
-                                appointmentSlot.style.height = '20px';
+                                appointmentSlot.style.height = `${duration * heightPerHour - 2}px`;
+                                appointmentSlot.style.backgroundColor = businessCategories.includes(event.category) ? 'rgba(26, 35, 126, 0.3)' : 'rgba(255, 152, 0, 0.3)';
+                                appointmentSlot.style.border = `1px solid ${businessCategories.includes(event.category) ? '#1a237e' : '#ff9800'}`;
+                                
                                 dayColumn.appendChild(appointmentSlot);
                             }
                         }
@@ -838,17 +852,27 @@
                 dayEvents.forEach(event => {
                     if (event.startTime) {
                         const startHour = parseInt(event.startTime.split(':')[0]);
+                        const startMinute = parseInt(event.startTime.split(':')[1]);
                         const endHour = parseInt(event.endTime.split(':')[0]);
+                        const endMinute = parseInt(event.endTime.split(':')[1]);
                         
-                        if (startHour <= hour && hour < endHour) {
+                        if (startHour === hour) {
                             const appointmentSlot = document.createElement('div');
                             appointmentSlot.classList.add('appointment-slot');
                             appointmentSlot.classList.add(businessCategories.includes(event.category) ? 'business' : 'personal');
                             appointmentSlot.textContent = `${event.startTime}-${event.endTime} ${event.title}`;
-                            appointmentSlot.style.top = '0';
+                            
+                            // Calculate duration in hours
+                            const duration = (endHour - startHour) + (endMinute - startMinute) / 60;
+                            const heightPerHour = 50; // Height of each hour slot
+                            
+                            appointmentSlot.style.top = `${(startMinute / 60) * heightPerHour}px`;
                             appointmentSlot.style.left = '2px';
                             appointmentSlot.style.right = '2px';
-                            appointmentSlot.style.height = '20px';
+                            appointmentSlot.style.height = `${duration * heightPerHour - 2}px`;
+                            appointmentSlot.style.backgroundColor = businessCategories.includes(event.category) ? 'rgba(26, 35, 126, 0.3)' : 'rgba(255, 152, 0, 0.3)';
+                            appointmentSlot.style.border = `1px solid ${businessCategories.includes(event.category) ? '#1a237e' : '#ff9800'}`;
+                            
                             dayColumn.appendChild(appointmentSlot);
                         }
                     }
@@ -874,16 +898,6 @@
             // Set the date input to selected date
             const dateInput = document.getElementById('eventDate');
             dateInput.value = selectedDate.toISOString().split('T')[0];
-        }
-
-        function previousMonth() {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            generateCalendar();
-        }
-
-        function nextMonth() {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            generateCalendar();
         }
 
         function addEvent(event) {
