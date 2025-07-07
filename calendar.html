@@ -104,6 +104,8 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
+            max-height: 600px;
+            overflow-y: auto;
         }
 
         .time-slot {
@@ -145,6 +147,18 @@
             position: sticky;
             top: 0;
             z-index: 2;
+        }
+
+        .day-view-header {
+            background-color: #1a237e;
+            color: white;
+            padding: 15px 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         .appointment-slot {
@@ -832,11 +846,14 @@
             const timeHeader = document.createElement('div');
             timeHeader.classList.add('time-slot');
             timeHeader.textContent = 'Time';
+            timeHeader.style.position = 'sticky';
+            timeHeader.style.top = '0';
+            timeHeader.style.zIndex = '10';
             calendarGrid.appendChild(timeHeader);
             
             // Add day header
             const dayHeader = document.createElement('div');
-            dayHeader.classList.add('week-day-header');
+            dayHeader.classList.add('day-view-header');
             dayHeader.textContent = `${dayNames[currentDate.getDay()]} ${currentDate.getDate()}`;
             calendarGrid.appendChild(dayHeader);
             
