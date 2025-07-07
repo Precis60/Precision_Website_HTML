@@ -193,6 +193,11 @@
             border-color: #ff9800;
         }
 
+        .appointment-slot.homeschooling {
+            background-color: rgba(76, 175, 80, 0.2);
+            border-color: #4caf50;
+        }
+
         .time-form-group {
             display: flex;
             gap: 10px;
@@ -467,6 +472,47 @@
             background-color: #ff9800;
         }
 
+        /* Home Schooling Categories */
+        .category-math-lesson {
+            background-color: #4caf50;
+        }
+
+        .category-science-lesson {
+            background-color: #2196f3;
+        }
+
+        .category-english-lesson {
+            background-color: #9c27b0;
+        }
+
+        .category-history-lesson {
+            background-color: #795548;
+        }
+
+        .category-art-lesson {
+            background-color: #e91e63;
+        }
+
+        .category-music-lesson {
+            background-color: #ff5722;
+        }
+
+        .category-pe-lesson {
+            background-color: #4caf50;
+        }
+
+        .category-field-trip {
+            background-color: #ff9800;
+        }
+
+        .category-exam-test {
+            background-color: #f44336;
+        }
+
+        .category-project-work {
+            background-color: #607d8b;
+        }
+
         .form-group select {
             width: 100%;
             padding: 8px 12px;
@@ -620,6 +666,10 @@
                         <input type="checkbox" id="filter-personal" checked onchange="filterEvents()">
                         <span>Personal</span>
                     </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" id="filter-homeschooling" checked onchange="filterEvents()">
+                        <span>Home Schooling</span>
+                    </label>
                 </div>
             </div>
 
@@ -666,6 +716,18 @@
                                 <option value="health">Health</option>
                                 <option value="education">Education</option>
                                 <option value="entertainment">Entertainment</option>
+                            </optgroup>
+                            <optgroup label="Home Schooling">
+                                <option value="math-lesson">Math Lesson</option>
+                                <option value="science-lesson">Science Lesson</option>
+                                <option value="english-lesson">English Lesson</option>
+                                <option value="history-lesson">History Lesson</option>
+                                <option value="art-lesson">Art Lesson</option>
+                                <option value="music-lesson">Music Lesson</option>
+                                <option value="pe-lesson">PE Lesson</option>
+                                <option value="field-trip">Field Trip</option>
+                                <option value="exam-test">Exam/Test</option>
+                                <option value="project-work">Project Work</option>
                             </optgroup>
                         </select>
                     </div>
@@ -738,11 +800,23 @@
             'personal-task': 'Personal Task',
             'health': 'Health',
             'education': 'Education',
-            'entertainment': 'Entertainment'
+            'entertainment': 'Entertainment',
+            // Home Schooling Categories
+            'math-lesson': 'Math Lesson',
+            'science-lesson': 'Science Lesson',
+            'english-lesson': 'English Lesson',
+            'history-lesson': 'History Lesson',
+            'art-lesson': 'Art Lesson',
+            'music-lesson': 'Music Lesson',
+            'pe-lesson': 'PE Lesson',
+            'field-trip': 'Field Trip',
+            'exam-test': 'Exam/Test',
+            'project-work': 'Project Work'
         };
 
         const businessCategories = ['meeting', 'project-deadline', 'client-visit', 'installation', 'maintenance', 'training', 'networking', 'consultation', 'inspection', 'conference'];
         const personalCategories = ['appointment', 'family-time', 'vacation', 'fitness', 'hobbies', 'social', 'personal-task', 'health', 'education', 'entertainment'];
+        const homeSchoolingCategories = ['math-lesson', 'science-lesson', 'english-lesson', 'history-lesson', 'art-lesson', 'music-lesson', 'pe-lesson', 'field-trip', 'exam-test', 'project-work'];
 
         function switchView(view) {
             currentView = view;
@@ -950,7 +1024,16 @@
                                 if (startHour === hour && startMinute === minute) {
                                     const appointmentSlot = document.createElement('div');
                                     appointmentSlot.classList.add('appointment-slot');
-                                    appointmentSlot.classList.add(businessCategories.includes(event.category) ? 'business' : 'personal');
+                                    
+                                    // Determine category type for styling
+                                    let categoryType = 'business';
+                                    if (personalCategories.includes(event.category)) {
+                                        categoryType = 'personal';
+                                    } else if (homeSchoolingCategories.includes(event.category)) {
+                                        categoryType = 'homeschooling';
+                                    }
+                                    
+                                    appointmentSlot.classList.add(categoryType);
                                     appointmentSlot.textContent = `${event.startTime}-${event.endTime} ${event.title}`;
                                     appointmentSlot.setAttribute('data-event-id', event.id);
                                     appointmentSlot.addEventListener('click', function() {
@@ -969,8 +1052,19 @@
                                     appointmentSlot.style.left = '2px';
                                     appointmentSlot.style.right = '2px';
                                     appointmentSlot.style.height = `${durationSlots * heightPerSlot - 4}px`;
-                                    appointmentSlot.style.backgroundColor = businessCategories.includes(event.category) ? 'rgba(26, 35, 126, 0.3)' : 'rgba(255, 152, 0, 0.3)';
-                                    appointmentSlot.style.border = `1px solid ${businessCategories.includes(event.category) ? '#1a237e' : '#ff9800'}`;
+                                    
+                                    // Set background and border colors based on category type
+                                    if (categoryType === 'business') {
+                                        appointmentSlot.style.backgroundColor = 'rgba(26, 35, 126, 0.3)';
+                                        appointmentSlot.style.border = '1px solid #1a237e';
+                                    } else if (categoryType === 'personal') {
+                                        appointmentSlot.style.backgroundColor = 'rgba(255, 152, 0, 0.3)';
+                                        appointmentSlot.style.border = '1px solid #ff9800';
+                                    } else if (categoryType === 'homeschooling') {
+                                        appointmentSlot.style.backgroundColor = 'rgba(76, 175, 80, 0.3)';
+                                        appointmentSlot.style.border = '1px solid #4caf50';
+                                    }
+                                    
                                     appointmentSlot.style.zIndex = '10';
 
                                     dayColumn.appendChild(appointmentSlot);
@@ -1051,7 +1145,16 @@
                             if (startHour === hour && startMinute === minute) {
                                 const appointmentSlot = document.createElement('div');
                                 appointmentSlot.classList.add('appointment-slot');
-                                appointmentSlot.classList.add(businessCategories.includes(event.category) ? 'business' : 'personal');
+                                
+                                // Determine category type for styling
+                                let categoryType = 'business';
+                                if (personalCategories.includes(event.category)) {
+                                    categoryType = 'personal';
+                                } else if (homeSchoolingCategories.includes(event.category)) {
+                                    categoryType = 'homeschooling';
+                                }
+                                
+                                appointmentSlot.classList.add(categoryType);
                                 appointmentSlot.textContent = `${event.startTime}-${event.endTime} ${event.title}`;
                                 appointmentSlot.setAttribute('data-event-id', event.id);
                                 appointmentSlot.addEventListener('click', function() {
@@ -1070,8 +1173,19 @@
                                 appointmentSlot.style.left = '2px';
                                 appointmentSlot.style.right = '2px';
                                 appointmentSlot.style.height = `${durationSlots * heightPerSlot - 4}px`;
-                                appointmentSlot.style.backgroundColor = businessCategories.includes(event.category) ? 'rgba(26, 35, 126, 0.3)' : 'rgba(255, 152, 0, 0.3)';
-                                appointmentSlot.style.border = `1px solid ${businessCategories.includes(event.category) ? '#1a237e' : '#ff9800'}`;
+                                
+                                // Set background and border colors based on category type
+                                if (categoryType === 'business') {
+                                    appointmentSlot.style.backgroundColor = 'rgba(26, 35, 126, 0.3)';
+                                    appointmentSlot.style.border = '1px solid #1a237e';
+                                } else if (categoryType === 'personal') {
+                                    appointmentSlot.style.backgroundColor = 'rgba(255, 152, 0, 0.3)';
+                                    appointmentSlot.style.border = '1px solid #ff9800';
+                                } else if (categoryType === 'homeschooling') {
+                                    appointmentSlot.style.backgroundColor = 'rgba(76, 175, 80, 0.3)';
+                                    appointmentSlot.style.border = '1px solid #4caf50';
+                                }
+                                
                                 appointmentSlot.style.zIndex = '10';
 
                                 dayColumn.appendChild(appointmentSlot);
@@ -1211,10 +1325,12 @@
             const showAll = document.getElementById('filter-all').checked;
             const showBusiness = document.getElementById('filter-business').checked;
             const showPersonal = document.getElementById('filter-personal').checked;
+            const showHomeschooling = document.getElementById('filter-homeschooling').checked;
 
             if (showAll) {
                 document.getElementById('filter-business').checked = true;
                 document.getElementById('filter-personal').checked = true;
+                document.getElementById('filter-homeschooling').checked = true;
             }
 
             displayEvents();
@@ -1228,6 +1344,7 @@
             const showAll = document.getElementById('filter-all').checked;
             const showBusiness = document.getElementById('filter-business').checked;
             const showPersonal = document.getElementById('filter-personal').checked;
+            const showHomeschooling = document.getElementById('filter-homeschooling').checked;
 
             // Filter events based on category
             let filteredEvents = events;
@@ -1235,8 +1352,11 @@
                 filteredEvents = events.filter(event => {
                     const isBusinessCategory = businessCategories.includes(event.category);
                     const isPersonalCategory = personalCategories.includes(event.category);
+                    const isHomeschoolingCategory = homeSchoolingCategories.includes(event.category);
 
-                    return (showBusiness && isBusinessCategory) || (showPersonal && isPersonalCategory);
+                    return (showBusiness && isBusinessCategory) || 
+                           (showPersonal && isPersonalCategory) || 
+                           (showHomeschooling && isHomeschoolingCategory);
                 });
             }
 
@@ -1304,6 +1424,7 @@
                 if (this.checked) {
                     document.getElementById('filter-business').checked = true;
                     document.getElementById('filter-personal').checked = true;
+                    document.getElementById('filter-homeschooling').checked = true;
                 }
                 displayEvents();
             });
@@ -1316,6 +1437,13 @@
             });
 
             document.getElementById('filter-personal').addEventListener('change', function () {
+                if (!this.checked) {
+                    document.getElementById('filter-all').checked = false;
+                }
+                displayEvents();
+            });
+
+            document.getElementById('filter-homeschooling').addEventListener('change', function () {
                 if (!this.checked) {
                     document.getElementById('filter-all').checked = false;
                 }
