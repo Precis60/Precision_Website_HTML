@@ -196,6 +196,101 @@
             background-color: #c82333;
         }
 
+        .event-category {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            margin-right: 10px;
+            text-transform: uppercase;
+        }
+
+        /* Business Categories */
+        .category-meeting { background-color: #1a237e; }
+        .category-project-deadline { background-color: #d32f2f; }
+        .category-client-visit { background-color: #7b1fa2; }
+        .category-installation { background-color: #f57c00; }
+        .category-maintenance { background-color: #388e3c; }
+        .category-training { background-color: #0288d1; }
+        .category-networking { background-color: #5d4037; }
+        .category-consultation { background-color: #303f9f; }
+        .category-inspection { background-color: #00695c; }
+        .category-conference { background-color: #e64a19; }
+
+        /* Personal Categories */
+        .category-appointment { background-color: #8e24aa; }
+        .category-family-time { background-color: #ff8f00; }
+        .category-vacation { background-color: #00bcd4; }
+        .category-fitness { background-color: #689f38; }
+        .category-hobbies { background-color: #ff5722; }
+        .category-social { background-color: #9c27b0; }
+        .category-personal-task { background-color: #607d8b; }
+        .category-health { background-color: #e91e63; }
+        .category-education { background-color: #3f51b5; }
+        .category-entertainment { background-color: #ff9800; }
+
+        .form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background-color: white;
+        }
+
+        .calendar-day.has-events {
+            position: relative;
+        }
+
+        .calendar-day.has-events::after {
+            content: '';
+            position: absolute;
+            bottom: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: #03f3d7;
+            border-radius: 50%;
+        }
+
+        .event-category-filter {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .filter-checkbox:hover {
+            background-color: #f9f9f9;
+        }
+
+        .filter-checkbox input[type="checkbox"] {
+            margin: 0;
+        }
+
         @media screen and (max-width: 768px) {
             .calendar-day {
                 min-height: 50px;
@@ -245,6 +340,24 @@
                 <!-- Calendar will be generated here -->
             </div>
 
+            <div class="event-category-filter">
+                <h3>Filter Events by Category</h3>
+                <div class="filter-group">
+                    <label class="filter-checkbox">
+                        <input type="checkbox" id="filter-all" checked onchange="filterEvents()">
+                        <span>All Categories</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" id="filter-business" checked onchange="filterEvents()">
+                        <span>Business</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" id="filter-personal" checked onchange="filterEvents()">
+                        <span>Personal</span>
+                    </label>
+                </div>
+            </div>
+
             <div class="event-form">
                 <h3>Add Event</h3>
                 <form id="eventForm">
@@ -255,6 +368,35 @@
                     <div class="form-group">
                         <label for="eventTitle">Title:</label>
                         <input type="text" id="eventTitle" name="eventTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventCategory">Category:</label>
+                        <select id="eventCategory" name="eventCategory" required>
+                            <optgroup label="Business">
+                                <option value="meeting">Meeting</option>
+                                <option value="project-deadline">Project Deadline</option>
+                                <option value="client-visit">Client Visit</option>
+                                <option value="installation">Installation</option>
+                                <option value="maintenance">Maintenance</option>
+                                <option value="training">Training</option>
+                                <option value="networking">Networking</option>
+                                <option value="consultation">Consultation</option>
+                                <option value="inspection">Inspection</option>
+                                <option value="conference">Conference</option>
+                            </optgroup>
+                            <optgroup label="Personal">
+                                <option value="appointment">Appointment</option>
+                                <option value="family-time">Family Time</option>
+                                <option value="vacation">Vacation</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="hobbies">Hobbies</option>
+                                <option value="social">Social</option>
+                                <option value="personal-task">Personal Task</option>
+                                <option value="health">Health</option>
+                                <option value="education">Education</option>
+                                <option value="entertainment">Entertainment</option>
+                            </optgroup>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="eventDescription">Description:</label>
@@ -296,6 +438,34 @@
         ];
 
         const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        const categories = {
+            // Business Categories
+            'meeting': 'Meeting',
+            'project-deadline': 'Project Deadline',
+            'client-visit': 'Client Visit',
+            'installation': 'Installation',
+            'maintenance': 'Maintenance',
+            'training': 'Training',
+            'networking': 'Networking',
+            'consultation': 'Consultation',
+            'inspection': 'Inspection',
+            'conference': 'Conference',
+            // Personal Categories
+            'appointment': 'Appointment',
+            'family-time': 'Family Time',
+            'vacation': 'Vacation',
+            'fitness': 'Fitness',
+            'hobbies': 'Hobbies',
+            'social': 'Social',
+            'personal-task': 'Personal Task',
+            'health': 'Health',
+            'education': 'Education',
+            'entertainment': 'Entertainment'
+        };
+
+        const businessCategories = ['meeting', 'project-deadline', 'client-visit', 'installation', 'maintenance', 'training', 'networking', 'consultation', 'inspection', 'conference'];
+        const personalCategories = ['appointment', 'family-time', 'vacation', 'fitness', 'hobbies', 'social', 'personal-task', 'health', 'education', 'entertainment'];
 
         function generateCalendar() {
             const monthYear = document.getElementById('monthYear');
@@ -342,6 +512,18 @@
                     month === today.getMonth() && 
                     day === today.getDate()) {
                     dayCell.classList.add('today');
+                }
+                
+                // Check if this day has events
+                const dayEvents = events.filter(event => {
+                    const eventDate = new Date(event.date);
+                    return eventDate.getFullYear() === year && 
+                           eventDate.getMonth() === month && 
+                           eventDate.getDate() === day;
+                });
+                
+                if (dayEvents.length > 0) {
+                    dayCell.classList.add('has-events');
                 }
                 
                 // Add click event
@@ -394,13 +576,15 @@
             
             const date = document.getElementById('eventDate').value;
             const title = document.getElementById('eventTitle').value;
+            const category = document.getElementById('eventCategory').value;
             const description = document.getElementById('eventDescription').value;
             
-            if (date && title) {
+            if (date && title && category) {
                 const newEvent = {
                     id: Date.now(),
                     date: date,
                     title: title,
+                    category: category,
                     description: description
                 };
                 
@@ -410,7 +594,11 @@
                 // Clear form
                 document.getElementById('eventForm').reset();
                 
-                // Update events display
+                // Set today's date as default again
+                document.getElementById('eventDate').value = new Date().toISOString().split('T')[0];
+                
+                // Update calendar and events display
+                generateCalendar();
                 displayEvents();
                 
                 alert('Event added successfully!');
@@ -420,6 +608,20 @@
         function deleteEvent(eventId) {
             events = events.filter(event => event.id !== eventId);
             localStorage.setItem('calendarEvents', JSON.stringify(events));
+            generateCalendar();
+            displayEvents();
+        }
+
+        function filterEvents() {
+            const showAll = document.getElementById('filter-all').checked;
+            const showBusiness = document.getElementById('filter-business').checked;
+            const showPersonal = document.getElementById('filter-personal').checked;
+            
+            if (showAll) {
+                document.getElementById('filter-business').checked = true;
+                document.getElementById('filter-personal').checked = true;
+            }
+            
             displayEvents();
         }
 
@@ -427,15 +629,31 @@
             const eventsList = document.getElementById('eventsList');
             eventsList.innerHTML = '';
             
-            if (events.length === 0) {
-                eventsList.innerHTML = '<p>No events scheduled.</p>';
+            // Get filter states
+            const showAll = document.getElementById('filter-all').checked;
+            const showBusiness = document.getElementById('filter-business').checked;
+            const showPersonal = document.getElementById('filter-personal').checked;
+            
+            // Filter events based on category
+            let filteredEvents = events;
+            if (!showAll) {
+                filteredEvents = events.filter(event => {
+                    const isBusinessCategory = businessCategories.includes(event.category);
+                    const isPersonalCategory = personalCategories.includes(event.category);
+                    
+                    return (showBusiness && isBusinessCategory) || (showPersonal && isPersonalCategory);
+                });
+            }
+            
+            if (filteredEvents.length === 0) {
+                eventsList.innerHTML = '<p>No events scheduled for the selected categories.</p>';
                 return;
             }
             
             // Sort events by date
-            events.sort((a, b) => new Date(a.date) - new Date(b.date));
+            filteredEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
             
-            events.forEach(event => {
+            filteredEvents.forEach(event => {
                 const eventItem = document.createElement('div');
                 eventItem.classList.add('event-item');
                 
@@ -447,10 +665,15 @@
                     day: 'numeric'
                 });
                 
+                const categoryName = categories[event.category] || event.category;
+                
                 eventItem.innerHTML = `
                     <button class="delete-btn" onclick="deleteEvent(${event.id})">Delete</button>
                     <div class="event-date">${formattedDate}</div>
-                    <div class="event-title">${event.title}</div>
+                    <div class="event-title">
+                        <span class="event-category category-${event.category}">${categoryName}</span>
+                        ${event.title}
+                    </div>
                     <div class="event-description">${event.description || 'No description'}</div>
                 `;
                 
@@ -466,8 +689,34 @@
             // Set today's date as default in form
             document.getElementById('eventDate').value = new Date().toISOString().split('T')[0];
             
+            // Set default category
+            document.getElementById('eventCategory').value = 'meeting';
+            
             // Add event form submission
             document.getElementById('eventForm').addEventListener('submit', addEvent);
+            
+            // Handle filter changes
+            document.getElementById('filter-all').addEventListener('change', function() {
+                if (this.checked) {
+                    document.getElementById('filter-business').checked = true;
+                    document.getElementById('filter-personal').checked = true;
+                }
+                displayEvents();
+            });
+            
+            document.getElementById('filter-business').addEventListener('change', function() {
+                if (!this.checked) {
+                    document.getElementById('filter-all').checked = false;
+                }
+                displayEvents();
+            });
+            
+            document.getElementById('filter-personal').addEventListener('change', function() {
+                if (!this.checked) {
+                    document.getElementById('filter-all').checked = false;
+                }
+                displayEvents();
+            });
         });
     </script>
 </body>
