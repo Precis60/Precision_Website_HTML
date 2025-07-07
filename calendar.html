@@ -108,11 +108,11 @@
 
         .time-slot {
             background-color: #f9f9f9;
-            padding: 4px 5px;
+            padding: 3px 5px;
             text-align: center;
             font-size: 11px;
             border-bottom: 1px solid #ddd;
-            min-height: 20px;
+            min-height: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -127,7 +127,7 @@
         .day-column {
             background-color: white;
             position: relative;
-            min-height: 25px;
+            min-height: 19px;
             border-bottom: 1px solid #eee;
         }
 
@@ -891,7 +891,7 @@
                                 const durationMinutes = endTotalMinutes - startTotalMinutes;
                                 const durationSlots = durationMinutes / 15;
                                 
-                                const heightPerSlot = 20; // Height of each 15-minute slot (reduced from 40)
+                                const heightPerSlot = 15; // Height of each 15-minute slot (reduced from 20)
                                 
                                 appointmentSlot.style.top = '2px';
                                 appointmentSlot.style.left = '2px';
