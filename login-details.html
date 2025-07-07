@@ -340,6 +340,8 @@
             const password = document.getElementById('password').value;
 
             if (siteSoftware && username && password) {
+                let isEditing = editingLogin !== null;
+                
                 if (editingLogin) {
                     // Update existing login
                     const loginIndex = logins.findIndex(l => l.id === editingLogin.id);
@@ -381,7 +383,7 @@
                 // Update table display
                 displayLogins();
 
-                alert(editingLogin ? 'Login updated successfully!' : 'Login added successfully!');
+                alert(isEditing ? 'Login updated successfully!' : 'Login added successfully!');
             }
         }
 
