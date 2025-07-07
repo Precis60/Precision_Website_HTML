@@ -87,25 +87,45 @@
         }
 
         .week-grid {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .week-header-row {
             display: grid;
             grid-template-columns: 100px repeat(7, 1fr);
             gap: 1px;
             background-color: #ddd;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
+        }
+
+        .week-content {
+            display: grid;
+            grid-template-columns: 100px repeat(7, 1fr);
+            gap: 1px;
+            background-color: #ddd;
             max-height: 600px;
             overflow-y: auto;
         }
 
         .day-grid {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .day-header-row {
             display: grid;
             grid-template-columns: 100px 1fr;
             gap: 1px;
             background-color: #ddd;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
+        }
+
+        .day-content {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 1px;
+            background-color: #ddd;
             max-height: 600px;
             overflow-y: auto;
         }
@@ -147,9 +167,6 @@
             text-align: center;
             font-weight: bold;
             font-size: 14px;
-            position: sticky;
-            top: 0;
-            z-index: 2;
         }
 
         .day-view-header {
@@ -159,9 +176,6 @@
             text-align: center;
             font-weight: bold;
             font-size: 14px;
-            position: sticky;
-            top: 0;
-            z-index: 10;
         }
 
         .appointment-slot {
@@ -1287,14 +1301,18 @@
             calendarGrid.innerHTML = '';
             calendarGrid.className = 'week-grid';
 
+            // Create header row container
+            const headerRow = document.createElement('div');
+            headerRow.className = 'week-header-row';
+            
             // Add time column header
             const timeHeader = document.createElement('div');
             timeHeader.classList.add('time-slot');
             timeHeader.textContent = 'Time';
-            timeHeader.style.position = 'sticky';
-            timeHeader.style.top = '0';
-            timeHeader.style.zIndex = '10';
-            calendarGrid.appendChild(timeHeader);
+            timeHeader.style.backgroundColor = '#1a237e';
+            timeHeader.style.color = 'white';
+            timeHeader.style.fontWeight = 'bold';
+            headerRow.appendChild(timeHeader);
 
             // Add day headers
             for (let i = 0; i < 7; i++) {
@@ -1304,8 +1322,14 @@
                 const dayHeader = document.createElement('div');
                 dayHeader.classList.add('week-day-header');
                 dayHeader.textContent = `${shortDayNames[i]} ${dayDate.getDate()}`;
-                calendarGrid.appendChild(dayHeader);
+                headerRow.appendChild(dayHeader);
             }
+            
+            calendarGrid.appendChild(headerRow);
+
+            // Create scrollable content container
+            const contentContainer = document.createElement('div');
+            contentContainer.className = 'week-content';
 
             // Get events for each day of the week
             const weekEvents = [];
@@ -1334,7 +1358,7 @@
                     }
                     
                     timeSlot.textContent = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-                    calendarGrid.appendChild(timeSlot);
+                    contentContainer.appendChild(timeSlot);
 
                     // Add day columns for this 15-minute slot
                     for (let day = 0; day < 7; day++) {
@@ -1407,10 +1431,12 @@
                             }
                         });
 
-                        calendarGrid.appendChild(dayColumn);
+                        contentContainer.appendChild(dayColumn);
                     }
                 }
             }
+            
+            calendarGrid.appendChild(contentContainer);
         }
 
         function generateDayView() {
@@ -1423,20 +1449,30 @@
             calendarGrid.innerHTML = '';
             calendarGrid.className = 'day-grid';
 
+            // Create header row container
+            const headerRow = document.createElement('div');
+            headerRow.className = 'day-header-row';
+            
             // Add time column header
             const timeHeader = document.createElement('div');
             timeHeader.classList.add('time-slot');
             timeHeader.textContent = 'Time';
-            timeHeader.style.position = 'sticky';
-            timeHeader.style.top = '0';
-            timeHeader.style.zIndex = '10';
-            calendarGrid.appendChild(timeHeader);
+            timeHeader.style.backgroundColor = '#1a237e';
+            timeHeader.style.color = 'white';
+            timeHeader.style.fontWeight = 'bold';
+            headerRow.appendChild(timeHeader);
 
             // Add day header
             const dayHeader = document.createElement('div');
             dayHeader.classList.add('day-view-header');
             dayHeader.textContent = `${dayNames[currentDate.getDay()]} ${currentDate.getDate()}`;
-            calendarGrid.appendChild(dayHeader);
+            headerRow.appendChild(dayHeader);
+            
+            calendarGrid.appendChild(headerRow);
+
+            // Create scrollable content container
+            const contentContainer = document.createElement('div');
+            contentContainer.className = 'day-content';
 
             // Get events for this day
             const dayEvents = events.filter(event => {
@@ -1457,7 +1493,7 @@
                     }
 
                     timeSlot.textContent = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-                    calendarGrid.appendChild(timeSlot);
+                    contentContainer.appendChild(timeSlot);
 
                     // Add day column for this 15-minute slot
                     const dayColumn = document.createElement('div');
@@ -1503,7 +1539,7 @@
                                 const durationMinutes = endTotalMinutes - startTotalMinutes;
                                 const durationSlots = durationMinutes / 15;
 
-                                const heightPerSlot = 15; // Height of each 15-minute slot (reduced from 20)
+                                const heightPerSlot = 15; // Height of each 15-minute slot
 
                                 appointmentSlot.style.top = '2px';
                                 appointmentSlot.style.left = '2px';
@@ -1529,9 +1565,11 @@
                         }
                     });
 
-                    calendarGrid.appendChild(dayColumn);
+                    contentContainer.appendChild(dayColumn);
                 }
             }
+            
+            calendarGrid.appendChild(contentContainer);
         }
 
         function selectDate(year, month, day) {
