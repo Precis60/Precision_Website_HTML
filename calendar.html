@@ -28,6 +28,38 @@
             font-size: 1.8em;
         }
 
+        .view-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .view-btn {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            color: #333;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .view-btn.active {
+            background-color: #1a237e;
+            color: white;
+            border-color: #1a237e;
+        }
+
+        .view-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .view-btn.active:hover {
+            background-color: #303f9f;
+        }
+
         .nav-button {
             background-color: #03f3d7;
             border: none;
@@ -52,6 +84,89 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
+        }
+
+        .week-grid {
+            display: grid;
+            grid-template-columns: 100px repeat(7, 1fr);
+            gap: 1px;
+            background-color: #ddd;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .day-grid {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 1px;
+            background-color: #ddd;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .time-slot {
+            background-color: #f9f9f9;
+            padding: 10px 5px;
+            text-align: center;
+            font-size: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .week-day-column,
+        .day-column {
+            background-color: white;
+            position: relative;
+            min-height: 600px;
+        }
+
+        .week-day-header {
+            background-color: #1a237e;
+            color: white;
+            padding: 15px 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        .appointment-slot {
+            position: absolute;
+            background-color: rgba(26, 35, 126, 0.1);
+            border: 1px solid #1a237e;
+            border-radius: 4px;
+            padding: 2px 4px;
+            font-size: 11px;
+            cursor: pointer;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .appointment-slot.business {
+            background-color: rgba(26, 35, 126, 0.2);
+            border-color: #1a237e;
+        }
+
+        .appointment-slot.personal {
+            background-color: rgba(255, 152, 0, 0.2);
+            border-color: #ff9800;
+        }
+
+        .time-form-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .time-form-group label {
+            min-width: 80px;
+        }
+
+        .time-input {
+            flex: 1;
         }
 
         .calendar-day {
@@ -331,9 +446,15 @@
             <p>Schedule and track your projects, appointments, and important dates.</p>
             
             <div class="calendar-header">
-                <button class="nav-button" onclick="previousMonth()">&lt; Previous</button>
+                <button class="nav-button" onclick="previousPeriod()">&lt; Previous</button>
                 <h2 id="monthYear"></h2>
-                <button class="nav-button" onclick="nextMonth()">Next &gt;</button>
+                <button class="nav-button" onclick="nextPeriod()">Next &gt;</button>
+            </div>
+
+            <div class="view-controls">
+                <button class="view-btn active" onclick="switchView('month')">Month</button>
+                <button class="view-btn" onclick="switchView('week')">Week</button>
+                <button class="view-btn" onclick="switchView('day')">Day</button>
             </div>
 
             <div class="calendar-grid" id="calendarGrid">
@@ -364,6 +485,12 @@
                     <div class="form-group">
                         <label for="eventDate">Date:</label>
                         <input type="date" id="eventDate" name="eventDate" required>
+                    </div>
+                    <div class="time-form-group">
+                        <label for="eventStartTime">Start Time:</label>
+                        <input type="time" id="eventStartTime" name="eventStartTime" class="time-input" required>
+                        <label for="eventEndTime">End Time:</label>
+                        <input type="time" id="eventEndTime" name="eventEndTime" class="time-input" required>
                     </div>
                     <div class="form-group">
                         <label for="eventTitle">Title:</label>
@@ -431,6 +558,7 @@
         let currentDate = new Date();
         let selectedDate = null;
         let events = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+        let currentView = 'month';
 
         const monthNames = [
             'January', 'February', 'March', 'April', 'May', 'June',
@@ -438,6 +566,7 @@
         ];
 
         const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const shortDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
         const categories = {
             // Business Categories
@@ -467,7 +596,47 @@
         const businessCategories = ['meeting', 'project-deadline', 'client-visit', 'installation', 'maintenance', 'training', 'networking', 'consultation', 'inspection', 'conference'];
         const personalCategories = ['appointment', 'family-time', 'vacation', 'fitness', 'hobbies', 'social', 'personal-task', 'health', 'education', 'entertainment'];
 
+        function switchView(view) {
+            currentView = view;
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            generateCalendar();
+        }
+
+        function previousPeriod() {
+            if (currentView === 'month') {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+            } else if (currentView === 'week') {
+                currentDate.setDate(currentDate.getDate() - 7);
+            } else if (currentView === 'day') {
+                currentDate.setDate(currentDate.getDate() - 1);
+            }
+            generateCalendar();
+        }
+
+        function nextPeriod() {
+            if (currentView === 'month') {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+            } else if (currentView === 'week') {
+                currentDate.setDate(currentDate.getDate() + 7);
+            } else if (currentView === 'day') {
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+            generateCalendar();
+        }
+
         function generateCalendar() {
+            if (currentView === 'month') {
+                generateMonthView();
+            } else if (currentView === 'week') {
+                generateWeekView();
+            } else if (currentView === 'day') {
+                generateDayView();
+            }
+        }
+
+        function generateMonthView() {
+        function generateMonthView() {
             const monthYear = document.getElementById('monthYear');
             const calendarGrid = document.getElementById('calendarGrid');
             
@@ -476,8 +645,9 @@
             
             monthYear.textContent = `${monthNames[month]} ${year}`;
             
-            // Clear previous calendar
+            // Clear previous calendar and set grid class
             calendarGrid.innerHTML = '';
+            calendarGrid.className = 'calendar-grid';
             
             // Add day headers
             dayNames.forEach(day => {
@@ -545,14 +715,159 @@
             }
         }
 
+        function generateWeekView() {
+            const monthYear = document.getElementById('monthYear');
+            const calendarGrid = document.getElementById('calendarGrid');
+            
+            // Get start of week (Sunday)
+            const startOfWeek = new Date(currentDate);
+            startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+            
+            const endOfWeek = new Date(startOfWeek);
+            endOfWeek.setDate(startOfWeek.getDate() + 6);
+            
+            monthYear.textContent = `${monthNames[startOfWeek.getMonth()]} ${startOfWeek.getDate()} - ${monthNames[endOfWeek.getMonth()]} ${endOfWeek.getDate()}, ${startOfWeek.getFullYear()}`;
+            
+            // Clear previous calendar and set grid class
+            calendarGrid.innerHTML = '';
+            calendarGrid.className = 'week-grid';
+            
+            // Add time column header
+            const timeHeader = document.createElement('div');
+            timeHeader.classList.add('time-slot');
+            timeHeader.textContent = 'Time';
+            calendarGrid.appendChild(timeHeader);
+            
+            // Add day headers
+            for (let i = 0; i < 7; i++) {
+                const dayDate = new Date(startOfWeek);
+                dayDate.setDate(startOfWeek.getDate() + i);
+                
+                const dayHeader = document.createElement('div');
+                dayHeader.classList.add('week-day-header');
+                dayHeader.textContent = `${shortDayNames[i]} ${dayDate.getDate()}`;
+                calendarGrid.appendChild(dayHeader);
+            }
+            
+            // Add time slots and day columns
+            for (let hour = 0; hour < 24; hour++) {
+                // Add time slot
+                const timeSlot = document.createElement('div');
+                timeSlot.classList.add('time-slot');
+                timeSlot.textContent = `${hour.toString().padStart(2, '0')}:00`;
+                calendarGrid.appendChild(timeSlot);
+                
+                // Add day columns
+                for (let day = 0; day < 7; day++) {
+                    const dayColumn = document.createElement('div');
+                    dayColumn.classList.add('week-day-column');
+                    
+                    // Add events for this day and hour
+                    const dayDate = new Date(startOfWeek);
+                    dayDate.setDate(startOfWeek.getDate() + day);
+                    
+                    const dayEvents = events.filter(event => {
+                        const eventDate = new Date(event.date);
+                        return eventDate.toDateString() === dayDate.toDateString();
+                    });
+                    
+                    dayEvents.forEach(event => {
+                        if (event.startTime) {
+                            const startHour = parseInt(event.startTime.split(':')[0]);
+                            const endHour = parseInt(event.endTime.split(':')[0]);
+                            
+                            if (startHour <= hour && hour < endHour) {
+                                const appointmentSlot = document.createElement('div');
+                                appointmentSlot.classList.add('appointment-slot');
+                                appointmentSlot.classList.add(businessCategories.includes(event.category) ? 'business' : 'personal');
+                                appointmentSlot.textContent = `${event.startTime}-${event.endTime} ${event.title}`;
+                                appointmentSlot.style.top = '0';
+                                appointmentSlot.style.left = '2px';
+                                appointmentSlot.style.right = '2px';
+                                appointmentSlot.style.height = '20px';
+                                dayColumn.appendChild(appointmentSlot);
+                            }
+                        }
+                    });
+                    
+                    calendarGrid.appendChild(dayColumn);
+                }
+            }
+        }
+
+        function generateDayView() {
+            const monthYear = document.getElementById('monthYear');
+            const calendarGrid = document.getElementById('calendarGrid');
+            
+            monthYear.textContent = `${dayNames[currentDate.getDay()]}, ${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
+            
+            // Clear previous calendar and set grid class
+            calendarGrid.innerHTML = '';
+            calendarGrid.className = 'day-grid';
+            
+            // Add time column header
+            const timeHeader = document.createElement('div');
+            timeHeader.classList.add('time-slot');
+            timeHeader.textContent = 'Time';
+            calendarGrid.appendChild(timeHeader);
+            
+            // Add day header
+            const dayHeader = document.createElement('div');
+            dayHeader.classList.add('week-day-header');
+            dayHeader.textContent = `${dayNames[currentDate.getDay()]} ${currentDate.getDate()}`;
+            calendarGrid.appendChild(dayHeader);
+            
+            // Add time slots and day column
+            for (let hour = 0; hour < 24; hour++) {
+                // Add time slot
+                const timeSlot = document.createElement('div');
+                timeSlot.classList.add('time-slot');
+                timeSlot.textContent = `${hour.toString().padStart(2, '0')}:00`;
+                calendarGrid.appendChild(timeSlot);
+                
+                // Add day column
+                const dayColumn = document.createElement('div');
+                dayColumn.classList.add('day-column');
+                
+                // Add events for this hour
+                const dayEvents = events.filter(event => {
+                    const eventDate = new Date(event.date);
+                    return eventDate.toDateString() === currentDate.toDateString();
+                });
+                
+                dayEvents.forEach(event => {
+                    if (event.startTime) {
+                        const startHour = parseInt(event.startTime.split(':')[0]);
+                        const endHour = parseInt(event.endTime.split(':')[0]);
+                        
+                        if (startHour <= hour && hour < endHour) {
+                            const appointmentSlot = document.createElement('div');
+                            appointmentSlot.classList.add('appointment-slot');
+                            appointmentSlot.classList.add(businessCategories.includes(event.category) ? 'business' : 'personal');
+                            appointmentSlot.textContent = `${event.startTime}-${event.endTime} ${event.title}`;
+                            appointmentSlot.style.top = '0';
+                            appointmentSlot.style.left = '2px';
+                            appointmentSlot.style.right = '2px';
+                            appointmentSlot.style.height = '20px';
+                            dayColumn.appendChild(appointmentSlot);
+                        }
+                    }
+                });
+                
+                calendarGrid.appendChild(dayColumn);
+            }
+        }
+
         function selectDate(year, month, day) {
             // Remove previous selection
             document.querySelectorAll('.calendar-day.selected').forEach(cell => {
                 cell.classList.remove('selected');
             });
             
-            // Add selection to clicked day
-            event.target.classList.add('selected');
+            // Add selection to clicked day (only in month view)
+            if (currentView === 'month') {
+                event.target.classList.add('selected');
+            }
             
             selectedDate = new Date(year, month, day);
             
@@ -577,14 +892,24 @@
             const date = document.getElementById('eventDate').value;
             const title = document.getElementById('eventTitle').value;
             const category = document.getElementById('eventCategory').value;
+            const startTime = document.getElementById('eventStartTime').value;
+            const endTime = document.getElementById('eventEndTime').value;
             const description = document.getElementById('eventDescription').value;
             
-            if (date && title && category) {
+            // Validate end time is after start time
+            if (startTime && endTime && startTime >= endTime) {
+                alert('End time must be after start time!');
+                return;
+            }
+            
+            if (date && title && category && startTime && endTime) {
                 const newEvent = {
                     id: Date.now(),
                     date: date,
                     title: title,
                     category: category,
+                    startTime: startTime,
+                    endTime: endTime,
                     description: description
                 };
                 
@@ -666,6 +991,7 @@
                 });
                 
                 const categoryName = categories[event.category] || event.category;
+                const timeInfo = event.startTime && event.endTime ? `${event.startTime} - ${event.endTime}` : 'All Day';
                 
                 eventItem.innerHTML = `
                     <button class="delete-btn" onclick="deleteEvent(${event.id})">Delete</button>
@@ -674,6 +1000,7 @@
                         <span class="event-category category-${event.category}">${categoryName}</span>
                         ${event.title}
                     </div>
+                    <div class="event-time" style="color: #666; font-size: 14px; margin-bottom: 5px;">${timeInfo}</div>
                     <div class="event-description">${event.description || 'No description'}</div>
                 `;
                 
@@ -688,6 +1015,10 @@
             
             // Set today's date as default in form
             document.getElementById('eventDate').value = new Date().toISOString().split('T')[0];
+            
+            // Set default times
+            document.getElementById('eventStartTime').value = '09:00';
+            document.getElementById('eventEndTime').value = '10:00';
             
             // Set default category
             document.getElementById('eventCategory').value = 'meeting';
