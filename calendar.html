@@ -108,22 +108,31 @@
 
         .time-slot {
             background-color: #f9f9f9;
-            padding: 8px 5px;
+            padding: 4px 5px;
             text-align: center;
             font-size: 11px;
             border-bottom: 1px solid #ddd;
-            min-height: 40px;
+            min-height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .time-slot.hour-mark {
+            border-bottom: 2px solid #333;
+            font-weight: bold;
         }
 
         .week-day-column,
         .day-column {
             background-color: white;
             position: relative;
-            min-height: 50px;
+            min-height: 25px;
             border-bottom: 1px solid #eee;
+        }
+
+        .day-column.hour-mark {
+            border-bottom: 2px solid #333;
         }
 
         .week-day-header {
@@ -843,12 +852,23 @@
                     // Add time slot
                     const timeSlot = document.createElement('div');
                     timeSlot.classList.add('time-slot');
+                    
+                    // Add hour-mark class for the top of each hour
+                    if (minute === 0) {
+                        timeSlot.classList.add('hour-mark');
+                    }
+                    
                     timeSlot.textContent = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
                     calendarGrid.appendChild(timeSlot);
                     
                     // Add day column for this 15-minute slot
                     const dayColumn = document.createElement('div');
                     dayColumn.classList.add('day-column');
+                    
+                    // Add hour-mark class for the top of each hour
+                    if (minute === 0) {
+                        dayColumn.classList.add('hour-mark');
+                    }
                     
                     // Check if any events start in this 15-minute slot
                     dayEvents.forEach(event => {
@@ -871,7 +891,7 @@
                                 const durationMinutes = endTotalMinutes - startTotalMinutes;
                                 const durationSlots = durationMinutes / 15;
                                 
-                                const heightPerSlot = 40; // Height of each 15-minute slot
+                                const heightPerSlot = 20; // Height of each 15-minute slot (reduced from 40)
                                 
                                 appointmentSlot.style.top = '2px';
                                 appointmentSlot.style.left = '2px';
