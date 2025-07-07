@@ -1,0 +1,12 @@
+{
+  "contacts": [
+    {
+      "name": "Test Contact",
+      "phone": "123-456-7890",
+      "category": "business",
+      "id": 1
+    }
+  ],
+  "events": [],
+  "loginDetails": []
+}
