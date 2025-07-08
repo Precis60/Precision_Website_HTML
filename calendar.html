@@ -63,8 +63,9 @@
 
         .view-btn:hover,
         .view-btn.active {
-            background-color: #03f3d7;
-            color: #050000;
+            background-color: #1a237e;
+            color: white;
+            border-color: #1a237e;
         }
 
         .calendar-grid {
@@ -130,6 +131,77 @@
             bottom: 8px;
             left: 50%;
             transform: translateX(-50%);
+        }
+
+        /* Week and Day View Styles */
+        .time-grid-container {
+            display: flex;
+        }
+
+        .time-column {
+            flex: 0 0 60px;
+            padding-top: 30px;
+            /* Align with day headers */
+        }
+
+        .time-slot {
+            height: 50px;
+            text-align: right;
+            padding-right: 10px;
+            font-size: 12px;
+            color: #666;
+            border-bottom: 1px solid #eee;
+            box-sizing: border-box;
+        }
+
+        .days-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+
+        .day-column {
+            border-right: 1px solid #ddd;
+            position: relative;
+        }
+
+        .day-column:last-child {
+            border-right: none;
+        }
+
+        .day-column-header {
+            text-align: center;
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .day-column-body {
+            position: relative;
+        }
+
+        .hour-slot {
+            height: 50px;
+            border-bottom: 1px solid #eee;
+            box-sizing: border-box;
+        }
+
+        .event-block {
+            position: absolute;
+            background-color: #1a237e;
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+
+        #day-view .days-grid {
+            grid-template-columns: 1fr;
         }
 
         .calendar-grid-container.view {
