@@ -22,7 +22,11 @@ class DataManager {
     async getContacts() {
         if (this.useAPI) {
             try {
-                const response = await fetch(`${this.apiBaseUrl}/contacts`);
+                const response = await fetch(`${this.apiBaseUrl}/contacts`, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
                 return await response.json();
             } catch (error) {
                 console.error('API Error, falling back to localStorage:', error);
@@ -108,7 +112,11 @@ class DataManager {
     async getEvents() {
         if (this.useAPI) {
             try {
-                const response = await fetch(`${this.apiBaseUrl}/events`);
+                const response = await fetch(`${this.apiBaseUrl}/events`, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
                 return await response.json();
             } catch (error) {
                 console.error('API Error, falling back to localStorage:', error);
@@ -194,7 +202,11 @@ class DataManager {
     async getLoginDetails() {
         if (this.useAPI) {
             try {
-                const response = await fetch(`${this.apiBaseUrl}/loginDetails`);
+                const response = await fetch(`${this.apiBaseUrl}/loginDetails`, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
                 return await response.json();
             } catch (error) {
                 console.error('API Error, falling back to localStorage:', error);
