@@ -1,23 +1,19 @@
+
 {
-  "name": "precision-website-backend",
-  "version": "1.0.0",
-  "description": "Backend API for Precision Cabling & Automation website",
-  "main": "server.js",
+  "name": "precision-website-app",
+  "version": "5.0.0",
+  "description": "Precision Cabling Website - NOT JSON SERVER",
+  "type": "module",
+  "main": "server.mjs",
   "scripts": {
-    "start": "json-server --watch db.json --port ${PORT:-3000} --host 0.0.0.0 --static ./public",
-    "dev": "json-server --watch db.json --port 3000 --static ./public",
-    "json-server": "json-server --watch db.json --port ${PORT:-3000} --host 0.0.0.0"
+    "start": "echo 'Starting new server...' && node server.mjs"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "json-server": "^0.17.4"
+    "express": "4.18.2"
   },
-  "keywords": [
-    "api",
-    "json-server",
-    "contacts",
-    "calendar"
-  ],
-  "author": "Precision Cabling & Automation",
+  "devDependencies": {},
+  "keywords": ["website", "precision", "not-json-server"],
+  "author": "Precision",
   "license": "MIT"
 }
+EOF
