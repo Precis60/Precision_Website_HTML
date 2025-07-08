@@ -333,6 +333,8 @@
         const VALID_PASSWORD = 'PrecisionAdmin2025!';
         const SESSION_KEY = 'precision_auth_session';
         const PAGE_ACCESS_KEY = 'precision_page_access';
+        const SESSION_TIMESTAMP_KEY = 'precision_auth_timestamp';
+        const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 
         // Initialize Data Manager
         let dataManager;
@@ -351,14 +353,34 @@
         function checkAuthentication() {
             const session = sessionStorage.getItem(SESSION_KEY);
             const pageAccess = sessionStorage.getItem(PAGE_ACCESS_KEY);
+            const timestamp = sessionStorage.getItem(SESSION_TIMESTAMP_KEY);
             
             console.log('Login Details Authentication check:', {
                 session: session,
-                pageAccess: pageAccess
+                pageAccess: pageAccess,
+                timestamp: timestamp
             });
             
+            // Check if session exists and is valid
             if (!session || session !== 'authenticated') {
-                console.log('Login Details Authentication failed, showing modal');
+                console.log('Login Details Authentication failed - no valid session');
+                clearSession();
+                showLoginModal();
+                return false;
+            }
+            
+            // Check session timeout
+            if (timestamp) {
+                const sessionAge = Date.now() - parseInt(timestamp);
+                if (sessionAge > SESSION_TIMEOUT) {
+                    console.log('Login Details Authentication failed - session expired');
+                    clearSession();
+                    showLoginModal();
+                    return false;
+                }
+            } else {
+                console.log('Login Details Authentication failed - no timestamp');
+                clearSession();
                 showLoginModal();
                 return false;
             }
@@ -370,6 +392,12 @@
             
             console.log('Login Details Authentication passed');
             return true;
+        }
+
+        function clearSession() {
+            sessionStorage.removeItem(SESSION_KEY);
+            sessionStorage.removeItem(PAGE_ACCESS_KEY);
+            sessionStorage.removeItem(SESSION_TIMESTAMP_KEY);
         }
 
         function showLoginModal() {
@@ -492,6 +520,7 @@
             if (username === VALID_USERNAME && password === VALID_PASSWORD) {
                 sessionStorage.setItem(SESSION_KEY, 'authenticated');
                 sessionStorage.setItem(PAGE_ACCESS_KEY, 'login-details');
+                sessionStorage.setItem(SESSION_TIMESTAMP_KEY, Date.now().toString());
                 
                 // Remove modal and show content
                 const modal = document.getElementById('auth-modal');
@@ -517,8 +546,7 @@
         }
 
         function logout() {
-            sessionStorage.removeItem(SESSION_KEY);
-            sessionStorage.removeItem(PAGE_ACCESS_KEY);
+            clearSession();
             window.location.href = 'index.html';
         }
 
