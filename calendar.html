@@ -887,10 +887,17 @@
             const session = sessionStorage.getItem(SESSION_KEY);
             const pageAccess = sessionStorage.getItem(PAGE_ACCESS_KEY);
             
+            console.log('Calendar Authentication check:', {
+                session: session,
+                pageAccess: pageAccess
+            });
+            
             if (!session || !pageAccess || session !== 'authenticated') {
+                console.log('Calendar Authentication failed, showing modal');
                 showLoginModal();
                 return false;
             }
+            console.log('Calendar Authentication passed');
             return true;
         }
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Session Test</title>
+</head>
+<body>
+    <h1>Session Clearing Test</h1>
+    <button onclick="clearAllSessions()">Clear All Sessions</button>
+    <button onclick="checkSessions()">Check Sessions</button>
+    <div id="status"></div>
+
+    <script>
+        function clearAllSessions() {
+            sessionStorage.clear();
+            localStorage.clear();
+            document.getElementById('status').innerHTML = '<p style="color: green;">All sessions and localStorage cleared!</p>';
+        }
+
+        function checkSessions() {
+            const session = sessionStorage.getItem('precision_auth_session');
+            const pageAccess = sessionStorage.getItem('precision_page_access');
+            
+            document.getElementById('status').innerHTML = `
+                <h2>Current Session Status:</h2>
+                <p><strong>Session:</strong> ${session || 'null'}</p>
+                <p><strong>Page Access:</strong> ${pageAccess || 'null'}</p>
+                <p><strong>SessionStorage keys:</strong> ${Object.keys(sessionStorage).length}</p>
+                <p><strong>LocalStorage keys:</strong> ${Object.keys(localStorage).length}</p>
+            `;
+        }
+
+        // Auto-check on load
+        checkSessions();
+    </script>
+</body>
+</html>

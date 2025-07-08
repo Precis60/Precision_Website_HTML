@@ -352,10 +352,17 @@
             const session = sessionStorage.getItem(SESSION_KEY);
             const pageAccess = sessionStorage.getItem(PAGE_ACCESS_KEY);
             
+            console.log('Login Details Authentication check:', {
+                session: session,
+                pageAccess: pageAccess
+            });
+            
             if (!session || !pageAccess || session !== 'authenticated') {
+                console.log('Login Details Authentication failed, showing modal');
                 showLoginModal();
                 return false;
             }
+            console.log('Login Details Authentication passed');
             return true;
         }
 

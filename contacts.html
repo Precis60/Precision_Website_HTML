@@ -555,18 +555,35 @@
             const session = sessionStorage.getItem(SESSION_KEY);
             const pageAccess = sessionStorage.getItem(PAGE_ACCESS_KEY);
             
+            console.log('Authentication check:', {
+                session: session,
+                pageAccess: pageAccess,
+                sessionKey: SESSION_KEY,
+                pageAccessKey: PAGE_ACCESS_KEY
+            });
+            
             if (!session || !pageAccess || session !== 'authenticated') {
+                console.log('Authentication failed, showing modal');
                 showLoginModal();
                 return false;
             }
+            console.log('Authentication passed');
             return true;
         }
 
         function showLoginModal() {
+            console.log('showLoginModal called');
+            
             // Hide main content
             const mainContent = document.querySelector('main');
             const header = document.querySelector('.header');
             const footer = document.querySelector('.site-footer');
+            
+            console.log('Found elements:', {
+                mainContent: !!mainContent,
+                header: !!header,
+                footer: !!footer
+            });
             
             if (mainContent) mainContent.style.display = 'none';
             if (header) header.style.display = 'none';
@@ -655,6 +672,7 @@
             `;
 
             document.body.appendChild(modal);
+            console.log('Login modal added to DOM');
 
             // Add event listeners
             document.getElementById('login-btn').addEventListener('click', handleLogin);
@@ -672,6 +690,7 @@
 
             // Focus on username field
             document.getElementById('login-username').focus();
+            console.log('Login modal setup complete');
         }
 
         function handleLogin() {
@@ -752,13 +771,18 @@
 
         // Check authentication on page load
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, starting initialization');
+            
             // Initialize DataManager first
             initializeDataManager();
             
+            console.log('About to check authentication');
             if (!checkAuthentication()) {
+                console.log('Authentication failed, exiting');
                 return; // Authentication modal will be shown
             }
             
+            console.log('Authentication passed, initializing contacts');
             // Initialize contacts after authentication check passes
             initializeContacts();
         });
