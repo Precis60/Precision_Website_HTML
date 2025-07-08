@@ -8,12 +8,12 @@ const CONFIG = {
     // API URLs for different environments
     API_URLS: {
         development: 'http://localhost:3000',
-        production: 'https://precision-website-production.up.railway.app', // Update this with your actual Railway URL
+        production: 'https://precisionwebsitedatabase-production.up.railway.app', // Your actual Railway URL
         staging: 'https://your-staging-app.railway.app'
     },
     
     // Current environment (change this based on where you're running)
-    ENVIRONMENT: 'development', // 'development', 'staging', or 'production'
+    ENVIRONMENT: 'production', // 'development', 'staging', or 'production'
     
     // Fallback settings
     ENABLE_FALLBACK: true, // If true, falls back to localStorage when API fails
