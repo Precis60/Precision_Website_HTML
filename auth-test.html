@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Test</title>
+    <script src="config.js"></script>
+    <script src="data-manager.js"></script>
+</head>
+<body>
+    <h1>Authentication Test</h1>
+    <div id="status"></div>
+    <button onclick="clearSession()">Clear Session</button>
+    <button onclick="testAuth()">Test Auth</button>
+
+    <script>
+        const VALID_USERNAME = 'admin';
+        const VALID_PASSWORD = 'PrecisionAdmin2025!';
+        const SESSION_KEY = 'precision_auth_session';
+        const PAGE_ACCESS_KEY = 'precision_page_access';
+
+        function clearSession() {
+            sessionStorage.removeItem(SESSION_KEY);
+            sessionStorage.removeItem(PAGE_ACCESS_KEY);
+            document.getElementById('status').innerHTML = '<p>Session cleared</p>';
+        }
+
+        function testAuth() {
+            const session = sessionStorage.getItem(SESSION_KEY);
+            const pageAccess = sessionStorage.getItem(PAGE_ACCESS_KEY);
+            
+            document.getElementById('status').innerHTML = `
+                <h2>Authentication Status:</h2>
+                <p><strong>Session:</strong> ${session || 'null'}</p>
+                <p><strong>Page Access:</strong> ${pageAccess || 'null'}</p>
+                <p><strong>Is Authenticated:</strong> ${session === 'authenticated' && pageAccess ? 'Yes' : 'No'}</p>
+            `;
+        }
+
+        // Test on load
+        testAuth();
+    </script>
+</body>
+</html>

@@ -13,8 +13,22 @@
 
     <script>
         async function testAPI() {
-            const dataManager = new DataManager(CONFIG.USE_ONLINE_STORAGE);
             const results = document.getElementById('results');
+            
+            // Debug CONFIG loading
+            console.log('CONFIG:', typeof CONFIG !== 'undefined' ? CONFIG : 'CONFIG not defined');
+            
+            let dataManager;
+            try {
+                const useOnlineStorage = typeof CONFIG !== 'undefined' && CONFIG.USE_ONLINE_STORAGE;
+                console.log('Using online storage:', useOnlineStorage);
+                dataManager = new DataManager(useOnlineStorage);
+                console.log('DataManager initialized successfully');
+                console.log('API Base URL:', dataManager.apiBaseUrl);
+            } catch (error) {
+                console.error('Failed to initialize DataManager:', error);
+                dataManager = new DataManager(false);
+            }
             
             try {
                 // Test getting contacts
@@ -22,7 +36,7 @@
                 const contacts = await dataManager.getContacts();
                 console.log('Contacts:', contacts);
                 
-                // Test getting events
+                // Test getting events  
                 console.log('Testing events...');
                 const events = await dataManager.getEvents();
                 console.log('Events:', events);
@@ -34,6 +48,9 @@
                 
                 results.innerHTML = `
                     <h2>API Test Results:</h2>
+                    <p><strong>DataManager URL:</strong> ${dataManager.apiBaseUrl}</p>
+                    <p><strong>Using API:</strong> ${dataManager.useAPI}</p>
+                    
                     <h3>Contacts (${contacts.length}):</h3>
                     <pre>${JSON.stringify(contacts, null, 2)}</pre>
                     
@@ -46,7 +63,9 @@
                 
             } catch (error) {
                 console.error('Error testing API:', error);
-                results.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+                results.innerHTML = `<p style="color: red;">Error: ${error.message}</p>
+                                  <p><strong>Error Stack:</strong></p>
+                                  <pre>${error.stack}</pre>`;
             }
         }
         

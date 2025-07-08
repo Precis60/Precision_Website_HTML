@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Contacts</title>
+    <script src="config.js"></script>
+    <script src="data-manager.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug { background: #f0f0f0; padding: 10px; margin: 10px 0; border: 1px solid #ccc; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Debug Contacts Page</h1>
+    <div id="debug-info"></div>
+    <hr>
+    <div id="contacts-list"></div>
+
+    <script>
+        const VALID_USERNAME = 'admin';
+        const VALID_PASSWORD = 'PrecisionAdmin2025!';
+        const SESSION_KEY = 'precision_auth_session';
+        const PAGE_ACCESS_KEY = 'precision_page_access';
+
+        let dataManager;
+        let debugInfo = document.getElementById('debug-info');
+
+        function log(message, type = 'info') {
+            console.log(message);
+            const div = document.createElement('div');
+            div.className = `debug ${type}`;
+            div.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
+            debugInfo.appendChild(div);
+        }
+
+        function initializeDataManager() {
+            try {
+                log('Initializing DataManager...');
+                log(`CONFIG available: ${typeof CONFIG !== 'undefined'}`);
+                if (typeof CONFIG !== 'undefined') {
+                    log(`USE_ONLINE_STORAGE: ${CONFIG.USE_ONLINE_STORAGE}`);
+                    log(`API URL: ${CONFIG.API_URLS[CONFIG.ENVIRONMENT]}`);
+                }
+                
+                const useOnline = typeof CONFIG !== 'undefined' && CONFIG.USE_ONLINE_STORAGE;
+                dataManager = new DataManager(useOnline);
+                log(`DataManager initialized. Using API: ${dataManager.useAPI}`, 'success');
+                log(`API Base URL: ${dataManager.apiBaseUrl}`, 'success');
+            } catch (error) {
+                log(`DataManager initialization failed: ${error.message}`, 'error');
+                dataManager = new DataManager(false);
+                log('Fallback to localStorage mode', 'success');
+            }
+        }
+
+        function checkAuthentication() {
+            const session = sessionStorage.getItem(SESSION_KEY);
+            const pageAccess = sessionStorage.getItem(PAGE_ACCESS_KEY);
+            
+            log(`Session: ${session}`);
+            log(`Page Access: ${pageAccess}`);
+            
+            if (!session || !pageAccess || session !== 'authenticated') {
+                log('Authentication required', 'error');
+                showSimpleLogin();
+                return false;
+            }
+            log('Authentication passed', 'success');
+            return true;
+        }
+
+        function showSimpleLogin() {
+            const loginDiv = document.createElement('div');
+            loginDiv.innerHTML = `
+                <h2>Login Required</h2>
+                <input type="text" id="username" placeholder="Username" value="admin">
+                <input type="password" id="password" placeholder="Password" value="PrecisionAdmin2025!">
+                <button onclick="attemptLogin()">Login</button>
+                <div id="login-error" style="color: red; display: none;">Invalid credentials</div>
+            `;
+            document.body.insertBefore(loginDiv, document.body.firstChild);
+        }
+
+        function attemptLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+                sessionStorage.setItem(SESSION_KEY, 'authenticated');
+                sessionStorage.setItem(PAGE_ACCESS_KEY, 'contacts');
+                log('Login successful', 'success');
+                location.reload();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+                log('Login failed', 'error');
+            }
+        }
+
+        async function loadContacts() {
+            try {
+                log('Loading contacts...');
+                const contacts = await dataManager.getContacts();
+                log(`Loaded ${contacts.length} contacts`, 'success');
+                
+                const contactsList = document.getElementById('contacts-list');
+                contactsList.innerHTML = `
+                    <h2>Contacts (${contacts.length})</h2>
+                    <pre>${JSON.stringify(contacts, null, 2)}</pre>
+                `;
+            } catch (error) {
+                log(`Failed to load contacts: ${error.message}`, 'error');
+            }
+        }
+
+        // Initialize on DOM load
+        document.addEventListener('DOMContentLoaded', function() {
+            log('DOM loaded');
+            initializeDataManager();
+            
+            if (checkAuthentication()) {
+                loadContacts();
+            }
+        });
+    </script>
+</body>
+</html>
