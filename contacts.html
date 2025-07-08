@@ -562,11 +562,17 @@
                 pageAccessKey: PAGE_ACCESS_KEY
             });
             
-            if (!session || !pageAccess || session !== 'authenticated') {
+            if (!session || session !== 'authenticated') {
                 console.log('Authentication failed, showing modal');
                 showLoginModal();
                 return false;
             }
+            
+            // Update page access for this page if user is already authenticated
+            if (pageAccess !== 'contacts') {
+                sessionStorage.setItem(PAGE_ACCESS_KEY, 'contacts');
+            }
+            
             console.log('Authentication passed');
             return true;
         }
@@ -729,20 +735,8 @@
             window.location.href = 'index.html';
         }
 
-        // Auto-logout when leaving page
-        window.addEventListener('beforeunload', () => {
-            sessionStorage.removeItem(SESSION_KEY);
-            sessionStorage.removeItem(PAGE_ACCESS_KEY);
-        });
-
-        // Auto-logout when page loses focus
-        window.addEventListener('blur', () => {
-            setTimeout(() => {
-                if (document.hidden) {
-                    logout();
-                }
-            }, 100);
-        });
+        // Only clear session on explicit logout, not on page navigation
+        // Removed auto-logout on beforeunload and blur to allow navigation between pages
 
         function initializeContacts() {
             // Load contacts from API and then initialize UI
