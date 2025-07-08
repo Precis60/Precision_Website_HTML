@@ -6,7 +6,10 @@
   "main": "server.mjs",
   "scripts": {
     "start": "echo 'Starting new server...' && node server.mjs",
-    "validate": "node -e \"try { JSON.parse(require('fs').readFileSync('package.json', 'utf8')); console.log('✓ Valid JSON'); } catch(e) { console.error('✗ Invalid JSON:', e.message); process.exit(1); }\""
+    "validate": "node -e \"try { JSON.parse(require('fs').readFileSync('package.json', 'utf8')); console.log('✓ Valid JSON'); } catch(e) { console.error('✗ Invalid JSON:', e.message); process.exit(1); }\"",
+    "clean": "node -e \"const fs = require('fs'); const path = 'package.json'; try { const pkg = JSON.parse(fs.readFileSync(path, 'utf8')); fs.writeFileSync(path, JSON.stringify(pkg, null, 2) + '\\n'); console.log('✓ package.json has been programmatically cleaned and rewritten.'); } catch (e) { console.error('✗ Failed to clean package.json:', e.message); process.exit(1); }\"",
+    "verify": "cat package.json",
+    "postclean": "git add package.json && git commit -m \"Fix: Programmatically clean and rewrite package.json\" && git push origin main"
   },
   "dependencies": {
     "express": "4.18.2"
