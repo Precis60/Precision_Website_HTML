@@ -13,7 +13,7 @@ const CONFIG = {
     },
     
     // Current environment (change this based on where you're running)
-    ENVIRONMENT: 'production', // 'development', 'staging', or 'production'
+    ENVIRONMENT: 'development', // 'development', 'staging', or 'production'
     
     // Fallback settings
     ENABLE_FALLBACK: true, // If true, falls back to localStorage when API fails
