@@ -752,18 +752,33 @@
         });
 
         function initializeContacts() {
+            // Initialize contacts array to prevent undefined errors
+            if (!contacts) {
+                contacts = [];
+            }
+            
             // Load contacts from API and then initialize UI
             loadContactsFromAPI();
         }
 
         async function loadContactsFromAPI() {
             try {
-                contacts = await dataManager.getContacts();
+                if (dataManager && typeof dataManager.getContacts === 'function') {
+                    contacts = await dataManager.getContacts();
+                } else {
+                    console.warn('DataManager not available, using empty contacts array');
+                    contacts = [];
+                }
                 generateAlphabetButtons();
                 displayContacts();
                 
                 // Add form submission handler
-                document.getElementById('contactFormElement').addEventListener('submit', saveContact);
+                const formElement = document.getElementById('contactFormElement');
+                if (formElement) {
+                    formElement.addEventListener('submit', saveContact);
+                } else {
+                    console.error('Contact form element not found');
+                }
             } catch (error) {
                 console.error('Error loading contacts:', error);
                 // Fallback to empty array if error
@@ -772,7 +787,10 @@
                 displayContacts();
                 
                 // Add form submission handler
-                document.getElementById('contactFormElement').addEventListener('submit', saveContact);
+                const formElement = document.getElementById('contactFormElement');
+                if (formElement) {
+                    formElement.addEventListener('submit', saveContact);
+                }
             }
         }
 
@@ -936,10 +954,20 @@
 
         function openContactForm() {
             editingContact = null;
-            document.getElementById('formTitle').textContent = 'Add Contact';
-            document.getElementById('submitBtn').textContent = 'Add Contact';
-            document.getElementById('contactFormElement').reset();
-            document.getElementById('contactForm').classList.add('active');
+            
+            const formTitle = document.getElementById('formTitle');
+            const submitBtn = document.getElementById('submitBtn');
+            const contactFormElement = document.getElementById('contactFormElement');
+            const contactForm = document.getElementById('contactForm');
+            
+            if (formTitle) formTitle.textContent = 'Add Contact';
+            if (submitBtn) submitBtn.textContent = 'Add Contact';
+            if (contactFormElement) contactFormElement.reset();
+            if (contactForm) {
+                contactForm.classList.add('active');
+            } else {
+                console.error('Contact form not found');
+            }
         }
 
         function closeContactForm() {
