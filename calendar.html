@@ -1082,17 +1082,30 @@
 
         function initializeCalendar() {
             // Set today's date as default in form
-            document.getElementById('eventDate').value = new Date().toISOString().split('T')[0];
+            const eventDateInput = document.getElementById('eventDate');
+            if (eventDateInput) {
+                eventDateInput.value = new Date().toISOString().split('T')[0];
+            }
 
             // Set default times
-            document.getElementById('eventStartTime').value = '09:00';
-            document.getElementById('eventEndTime').value = '10:00';
+            const startTimeInput = document.getElementById('eventStartTime');
+            const endTimeInput = document.getElementById('eventEndTime');
+            if (startTimeInput && endTimeInput) {
+                startTimeInput.value = '09:00';
+                endTimeInput.value = '10:00';
+            }
 
             // Set default category
-            document.getElementById('eventCategory').value = 'centre-com-computers';
+            const categorySelect = document.getElementById('eventCategory');
+            if (categorySelect) {
+                categorySelect.value = 'centre-com-computers';
+            }
             
             // Add form submission handler
-            document.getElementById('eventForm').addEventListener('submit', addEvent);
+            const eventForm = document.getElementById('eventForm');
+            if (eventForm) {
+                eventForm.addEventListener('submit', addEvent);
+            }
 
             // Handle filter changes
             document.getElementById('filter-all').addEventListener('change', function () {
@@ -1151,9 +1164,13 @@
             // Initialize DataManager first
             initializeDataManager();
             
+            // Initialize events array to prevent undefined errors
+            events = [];
+            
             if (!checkAuthentication()) {
                 return; // Authentication modal will be shown
             }
+            
             initializeCalendar();
         });
 
@@ -1264,6 +1281,12 @@
         }
 
         function generateCalendar() {
+            const calendarGrid = document.getElementById('calendarGrid');
+            if (!calendarGrid) {
+                console.error('Calendar grid element not found!');
+                return;
+            }
+            
             if (currentView === 'month') {
                 generateMonthView();
             } else if (currentView === 'week') {
