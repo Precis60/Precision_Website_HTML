@@ -334,6 +334,9 @@
         const SESSION_KEY = 'precision_auth_session';
         const PAGE_ACCESS_KEY = 'precision_page_access';
 
+        // Initialize Data Manager
+        const dataManager = new DataManager(CONFIG.USE_ONLINE_STORAGE);
+
         function checkAuthentication() {
             const session = sessionStorage.getItem(SESSION_KEY);
             const pageAccess = sessionStorage.getItem(PAGE_ACCESS_KEY);
