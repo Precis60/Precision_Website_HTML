@@ -538,7 +538,18 @@
         const PAGE_ACCESS_KEY = 'precision_page_access';
 
         // Initialize Data Manager
-        const dataManager = new DataManager(CONFIG.USE_ONLINE_STORAGE);
+        let dataManager;
+        
+        // Initialize dataManager after DOM loads to ensure CONFIG is available
+        function initializeDataManager() {
+            try {
+                dataManager = new DataManager(CONFIG?.USE_ONLINE_STORAGE || false);
+            } catch (error) {
+                console.error('Failed to initialize DataManager:', error);
+                // Fallback to localStorage only
+                dataManager = new DataManager(false);
+            }
+        }
 
         function checkAuthentication() {
             const session = sessionStorage.getItem(SESSION_KEY);
@@ -741,9 +752,15 @@
 
         // Check authentication on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize DataManager first
+            initializeDataManager();
+            
             if (!checkAuthentication()) {
                 return; // Authentication modal will be shown
             }
+            
+            // Initialize contacts after authentication check passes
+            initializeContacts();
         });
 
         // Contacts functionality
