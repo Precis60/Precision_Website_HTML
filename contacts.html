@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -817,6 +816,18 @@
         let editingContact = null;
         let currentFilter = 'all';
         let currentAlphabetFilter = '';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            
+            initializePage();
+        });
+
+        async function initializePage() {
+            const dataManager = new DataManager(CONFIG.USE_ONLINE_STORAGE);
+            contacts = await dataManager.getContacts();
+            generateAlphabetButtons();
+            displayContacts();
+        }
 
         function getLastName(fullName) {
             if (!fullName) return '';
