@@ -2,10 +2,20 @@
 class DataManager {
     constructor(useAPI = false) {
         this.useAPI = useAPI;
-        // Use the correct URL for your environment
-        this.apiBaseUrl = window.location.hostname === 'localhost' 
+        // Get API URL from config
+        this.apiBaseUrl = this.getApiUrl();
+    }
+
+    getApiUrl() {
+        // Use CONFIG if available, otherwise fallback to environment detection
+        if (typeof CONFIG !== 'undefined' && CONFIG.API_URLS && CONFIG.ENVIRONMENT) {
+            return CONFIG.API_URLS[CONFIG.ENVIRONMENT];
+        }
+        
+        // Fallback logic if CONFIG is not available
+        return window.location.hostname === 'localhost' 
             ? 'http://localhost:3000' 
-            : 'https://your-app-name.railway.app'; // Replace with your actual deployment URL
+            : 'https://precisionwebsitedatabase-production.up.railway.app';
     }
 
     // Contacts methods
