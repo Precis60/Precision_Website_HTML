@@ -877,7 +877,15 @@
         // Initialize dataManager after DOM loads to ensure CONFIG is available
         function initializeDataManager() {
             try {
-                dataManager = new DataManager(CONFIG?.USE_ONLINE_STORAGE || false);
+                if (typeof CONFIG === 'undefined') {
+                    console.warn('CONFIG not found, using localStorage fallback');
+                    dataManager = new DataManager(false);
+                } else if (typeof DataManager === 'undefined') {
+                    console.error('DataManager class not found');
+                    dataManager = null;
+                } else {
+                    dataManager = new DataManager(CONFIG?.USE_ONLINE_STORAGE || false);
+                }
             } catch (error) {
                 console.error('Failed to initialize DataManager:', error);
                 // Fallback to localStorage only
@@ -1123,7 +1131,11 @@
 
         async function loadCalendarData() {
             try {
-                events = await dataManager.getEvents();
+                if (dataManager && typeof dataManager.getEvents === 'function') {
+                    events = await dataManager.getEvents();
+                } else {
+                    events = [];
+                }
                 generateCalendar();
                 displayEvents();
             } catch (error) {
