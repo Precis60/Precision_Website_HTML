@@ -1217,7 +1217,15 @@
         function switchView(view) {
             currentView = view;
             document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            
+            // Find the button that was clicked and add active class
+            const buttons = document.querySelectorAll('.view-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.toLowerCase() === view.toLowerCase()) {
+                    btn.classList.add('active');
+                }
+            });
+            
             generateCalendar();
         }
 
@@ -1314,8 +1322,8 @@
                 }
 
                 // Add click event
-                dayCell.addEventListener('click', function () {
-                    selectDate(year, month, day);
+                dayCell.addEventListener('click', function (event) {
+                    selectDate(year, month, day, event.target);
                 });
 
                 calendarGrid.appendChild(dayCell);
@@ -1620,15 +1628,15 @@
             calendarGrid.appendChild(contentContainer);
         }
 
-        function selectDate(year, month, day) {
+        function selectDate(year, month, day, targetElement) {
             // Remove previous selection
             document.querySelectorAll('.calendar-day.selected').forEach(cell => {
                 cell.classList.remove('selected');
             });
 
             // Add selection to clicked day (only in month view)
-            if (currentView === 'month') {
-                event.target.classList.add('selected');
+            if (currentView === 'month' && targetElement) {
+                targetElement.classList.add('selected');
             }
 
             selectedDate = new Date(year, month, day);
