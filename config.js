@@ -8,7 +8,7 @@ const CONFIG = {
     // API URLs for different environments
     API_URLS: {
         development: 'http://localhost:3000',
-        production: 'https://your-app.railway.app', // Replace with your actual URL
+        production: 'https://precision-website-production.up.railway.app', // Update this with your actual Railway URL
         staging: 'https://your-staging-app.railway.app'
     },
     
