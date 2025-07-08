@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Authentication</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        .test-section {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success { 
+            background: #d4edda; 
+            color: #155724; 
+            border: 1px solid #c3e6cb; 
+        }
+        .error { 
+            background: #f8d7da; 
+            color: #721c24; 
+            border: 1px solid #f5c6cb; 
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>Authentication & Database Test</h1>
+    
+    <div class="test-section">
+        <h2>Authentication Test</h2>
+        <p>Test the authentication system by clearing sessions and accessing protected pages.</p>
+        <button onclick="clearAllSessions()">Clear All Sessions</button>
+        <button onclick="openCalendar()">Test Calendar Auth</button>
+        <button onclick="openContacts()">Test Contacts Auth</button>
+        <button onclick="openLoginDetails()">Test Login Details Auth</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Database Connection Test</h2>
+        <p>Test the API connection and data retrieval.</p>
+        <button onclick="testContacts()">Test Contacts API</button>
+        <button onclick="testEvents()">Test Events API</button>
+        <button onclick="testLoginDetails()">Test Login Details API</button>
+        <div id="apiResults"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Session Status</h2>
+        <div id="sessionStatus"></div>
+        <button onclick="checkSessions()">Check Session Status</button>
+    </div>
+
+    <script>
+        const API_BASE = 'https://precisionwebsitedatabase-production.up.railway.app';
+
+        function clearAllSessions() {
+            sessionStorage.clear();
+            localStorage.clear();
+            checkSessions();
+            alert('All sessions cleared!');
+        }
+
+        function openCalendar() {
+            window.open('/calendar.html', '_blank');
+        }
+
+        function openContacts() {
+            window.open('/contacts.html', '_blank');
+        }
+
+        function openLoginDetails() {
+            window.open('/login-details.html', '_blank');
+        }
+
+        async function testContacts() {
+            const resultsDiv = document.getElementById('apiResults');
+            resultsDiv.innerHTML = '<p>Testing contacts API...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/contacts`);
+                const data = await response.json();
+                resultsDiv.innerHTML = `
+                    <div class="success">
+                        <h3>Contacts API Test - SUCCESS</h3>
+                        <p>Retrieved ${data.length} contacts</p>
+                        <pre>${JSON.stringify(data.slice(0, 2), null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="error">
+                        <h3>Contacts API Test - ERROR</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testEvents() {
+            const resultsDiv = document.getElementById('apiResults');
+            resultsDiv.innerHTML = '<p>Testing events API...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/events`);
+                const data = await response.json();
+                resultsDiv.innerHTML = `
+                    <div class="success">
+                        <h3>Events API Test - SUCCESS</h3>
+                        <p>Retrieved ${data.length} events</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="error">
+                        <h3>Events API Test - ERROR</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testLoginDetails() {
+            const resultsDiv = document.getElementById('apiResults');
+            resultsDiv.innerHTML = '<p>Testing login details API...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/loginDetails`);
+                const data = await response.json();
+                resultsDiv.innerHTML = `
+                    <div class="success">
+                        <h3>Login Details API Test - SUCCESS</h3>
+                        <p>Retrieved ${data.length} login details</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="error">
+                        <h3>Login Details API Test - ERROR</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function checkSessions() {
+            const sessionDiv = document.getElementById('sessionStatus');
+            const session = sessionStorage.getItem('precision_auth_session');
+            const pageAccess = sessionStorage.getItem('precision_page_access');
+            
+            sessionDiv.innerHTML = `
+                <h3>Current Session Status:</h3>
+                <p><strong>Auth Session:</strong> ${session || 'null'}</p>
+                <p><strong>Page Access:</strong> ${pageAccess || 'null'}</p>
+                <p><strong>Is Authenticated:</strong> ${session === 'authenticated' ? 'Yes' : 'No'}</p>
+                <p><strong>SessionStorage Keys:</strong> ${Object.keys(sessionStorage).length}</p>
+                <p><strong>LocalStorage Keys:</strong> ${Object.keys(localStorage).length}</p>
+            `;
+        }
+
+        // Auto-check on load
+        checkSessions();
+    </script>
+</body>
+</html>

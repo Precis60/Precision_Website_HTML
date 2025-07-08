@@ -1073,9 +1073,6 @@
         });
 
         function initializeCalendar() {
-            generateCalendar();
-            displayEvents();
-
             // Set today's date as default in form
             document.getElementById('eventDate').value = new Date().toISOString().split('T')[0];
 
@@ -1119,6 +1116,22 @@
                 }
                 displayEvents();
             });
+
+            // Load events and generate calendar
+            loadCalendarData();
+        }
+
+        async function loadCalendarData() {
+            try {
+                events = await dataManager.getEvents();
+                generateCalendar();
+                displayEvents();
+            } catch (error) {
+                console.error('Error loading events:', error);
+                events = [];
+                generateCalendar();
+                displayEvents();
+            }
         }
 
         // Check authentication on page load
@@ -1131,19 +1144,6 @@
             }
             initializeCalendar();
         });
-
-        async function initializeCalendar() {
-            try {
-                events = await dataManager.getEvents();
-                generateCalendar();
-                displayEvents();
-            } catch (error) {
-                console.error('Error loading events:', error);
-                events = [];
-                generateCalendar();
-                displayEvents();
-            }
-        }
 
         // Calendar functionality
         let currentDate = new Date();
@@ -1718,7 +1718,9 @@
                 console.error('Error saving event:', error);
                 alert('Error saving event. Please try again.');
             }
-        }        function editEvent(eventId) {
+        }
+
+        function editEvent(eventId) {
             const event = events.find(e => e.id === eventId);
             if (!event) return;
             
