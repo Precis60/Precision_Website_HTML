@@ -661,13 +661,83 @@
         }
 
         function generateWeekView(filteredEvents) {
-            // Implementation for week view - coming soon
-            document.getElementById('week-view').innerHTML = `<p style="text-align:center; padding:20px;">Weekly view is under construction.</p>`;
+            const weekView = document.getElementById('week-view');
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const day = currentDate.getDate();
+
+            const startOfWeek = new Date(currentDate);
+            startOfWeek.setDate(day - currentDate.getDay());
+
+            document.getElementById('monthYear').textContent = `Week of ${startOfWeek.toLocaleDateString()}`;
+
+            let html = '<div class="time-grid-container">';
+            html += '<div class="time-column">';
+            for (let i = 0; i < 24; i++) {
+                html += `<div class="time-slot">${i}:00</div>`;
+            }
+            html += '</div>';
+
+            html += '<div class="days-grid">';
+            for (let i = 0; i < 7; i++) {
+                const dayDate = new Date(startOfWeek);
+                dayDate.setDate(startOfWeek.getDate() + i);
+                html += `<div class="day-column">
+                            <div class="day-column-header">${dayDate.toLocaleDateString([], { weekday: 'short', month: 'numeric', day: 'numeric' })}</div>
+                            <div class="day-column-body">`;
+                for (let j = 0; j < 24; j++) {
+                    html += `<div class="hour-slot" data-date="${dayDate.toISOString().split('T')[0]}" data-hour="${j}"></div>`;
+                }
+                // Add events for this day
+                const dayEvents = (filteredEvents || events).filter(e => new Date(e.date).toDateString() === dayDate.toDateString());
+                dayEvents.forEach(event => {
+                    const eventDate = new Date(event.date);
+                    const top = eventDate.getHours() * 50; // 50px per hour
+                    const height = 50; // Default to 1 hour
+                    html += `<div class="event-block" style="top: ${top}px; height: ${height}px;" onclick="openEventForm(event)">${event.title}</div>`;
+                });
+                html += `</div></div>`;
+            }
+            html += '</div></div>';
+            weekView.innerHTML = html;
         }
 
         function generateDayView(filteredEvents) {
-            // Implementation for day view - coming soon
-            document.getElementById('day-view').innerHTML = `<p style="text-align:center; padding:20px;">Daily view is under construction.</p>`;
+            const dayView = document.getElementById('day-view');
+            document.getElementById('monthYear').textContent = currentDate.toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+            let html = '<div class="time-grid-container">';
+            html += '<div class="time-column">';
+            for (let i = 0; i < 24; i++) {
+                html += `<div class="time-slot">${i}:00</div>`;
+            }
+            html += '</div>';
+
+            html += '<div class="days-grid">';
+            html += `<div class="day-column">
+                        <div class="day-column-header">Events</div>
+                        <div class="day-column-body">`;
+            for (let j = 0; j < 24; j++) {
+                html += `<div class="hour-slot" data-date="${currentDate.toISOString().split('T')[0]}" data-hour="${j}"></div>`;
+            }
+            // Add events for this day
+            const dayEvents = (filteredEvents || events).filter(e => new Date(e.date).toDateString() === currentDate.toDateString());
+            dayEvents.forEach(event => {
+                const eventDate = new Date(event.date);
+                const top = eventDate.getHours() * 50;
+                const height = 50;
+                html += `<div class="event-block" style="top: ${top}px; height: ${height}px;" onclick="openEventForm(event)">${event.title}</div>`;
+            });
+            html += `</div></div>`;
+            html += '</div></div>';
+            dayView.innerHTML = html;
+        }
+
+        function openEventForm(event) {
+            selectDate(new Date(event.date));
+            document.getElementById('eventTitle').value = event.title;
+            document.getElementById('eventDescription').value = event.description;
+            document.getElementById('eventCategory').value = event.category;
         }
 
         function selectDate(date) {
