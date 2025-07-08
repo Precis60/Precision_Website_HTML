@@ -1,22 +1,22 @@
 // Configuration file for data storage
-// Change these settings to control where your data is stored
+// When frontend and backend are served from same domain, use relative URLs
 
 const CONFIG = {
     // Set to true to use online API, false for localStorage only
     USE_ONLINE_STORAGE: true,
     
-    // API URLs for different environments
+    // API URLs - use relative URLs when frontend and backend are on same domain
     API_URLS: {
         development: 'http://localhost:3000',
-        production: 'https://precisionwebsitedatabase-production.up.railway.app', // Your actual Railway URL - same as frontend since they're served together
-        staging: 'https://your-staging-app.railway.app'
+        production: '', // Empty = use relative URLs (same domain)
+        staging: ''
     },
     
-    // Current environment (change this based on where you're running)
-    ENVIRONMENT: 'production', // 'development', 'staging', or 'production'
+    // Current environment
+    ENVIRONMENT: 'production',
     
     // Fallback settings
-    ENABLE_FALLBACK: true, // If true, falls back to localStorage when API fails
+    ENABLE_FALLBACK: true,
     
     // Auto-retry settings
     RETRY_ATTEMPTS: 3,

@@ -7,19 +7,22 @@ class DataManager {
     }
 
     getApiUrl() {
-        // Use CONFIG if available, otherwise fallback to environment detection
+        // Use CONFIG if available
         if (typeof CONFIG !== 'undefined' && CONFIG.API_URLS && CONFIG.ENVIRONMENT) {
-            return CONFIG.API_URLS[CONFIG.ENVIRONMENT];
+            const configUrl = CONFIG.API_URLS[CONFIG.ENVIRONMENT];
+            // If config URL is empty, use relative URLs (same domain deployment)
+            if (!configUrl || configUrl === '') {
+                return '';
+            }
+            return configUrl;
         }
         
         // Fallback logic if CONFIG is not available
         if (window.location.hostname === 'localhost') {
             return 'http://localhost:3000';
-        } else if (window.location.hostname.includes('railway.app')) {
-            // When both frontend and backend are served from the same Railway app, use relative URLs
-            return window.location.origin;
         } else {
-            return 'https://precisionwebsitedatabase-production.up.railway.app';
+            // For production deployments, use relative URLs when served from same domain
+            return '';
         }
     }
 

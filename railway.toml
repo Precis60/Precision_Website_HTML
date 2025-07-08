@@ -6,5 +6,5 @@ startCommand = "npm start"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
 
-[variables]
+[environments.production.variables]
 NODE_ENV = "production"
