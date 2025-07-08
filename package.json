@@ -4,8 +4,9 @@
   "description": "Backend API for Precision Cabling & Automation website",
   "main": "server.js",
   "scripts": {
-    "start": "json-server --watch db.json --port ${PORT:-3000} --host 0.0.0.0",
-    "dev": "json-server --watch db.json --port 3000"
+    "start": "json-server --watch db.json --port ${PORT:-3000} --host 0.0.0.0 --static ./public",
+    "dev": "json-server --watch db.json --port 3000 --static ./public",
+    "json-server": "json-server --watch db.json --port ${PORT:-3000} --host 0.0.0.0"
   },
   "dependencies": {
     "cors": "^2.8.5",
