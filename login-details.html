@@ -353,41 +353,18 @@
         function checkAuthentication() {
             const session = sessionStorage.getItem(SESSION_KEY);
             const pageAccess = sessionStorage.getItem(PAGE_ACCESS_KEY);
-            const timestamp = sessionStorage.getItem(SESSION_TIMESTAMP_KEY);
             
             console.log('Login Details Authentication check:', {
                 session: session,
-                pageAccess: pageAccess,
-                timestamp: timestamp
+                pageAccess: pageAccess
             });
             
-            // Check if session exists and is valid
-            if (!session || session !== 'authenticated') {
-                console.log('Login Details Authentication failed - no valid session');
+            // Require fresh authentication for this page - no session sharing between pages
+            if (!session || session !== 'authenticated' || pageAccess !== 'login-details') {
+                console.log('Login Details Authentication failed - requiring fresh login');
                 clearSession();
                 showLoginModal();
                 return false;
-            }
-            
-            // Check session timeout
-            if (timestamp) {
-                const sessionAge = Date.now() - parseInt(timestamp);
-                if (sessionAge > SESSION_TIMEOUT) {
-                    console.log('Login Details Authentication failed - session expired');
-                    clearSession();
-                    showLoginModal();
-                    return false;
-                }
-            } else {
-                console.log('Login Details Authentication failed - no timestamp');
-                clearSession();
-                showLoginModal();
-                return false;
-            }
-            
-            // Update page access for this page if user is already authenticated
-            if (pageAccess !== 'login-details') {
-                sessionStorage.setItem(PAGE_ACCESS_KEY, 'login-details');
             }
             
             console.log('Login Details Authentication passed');
@@ -397,7 +374,6 @@
         function clearSession() {
             sessionStorage.removeItem(SESSION_KEY);
             sessionStorage.removeItem(PAGE_ACCESS_KEY);
-            sessionStorage.removeItem(SESSION_TIMESTAMP_KEY);
         }
 
         function showLoginModal() {
@@ -520,7 +496,6 @@
             if (username === VALID_USERNAME && password === VALID_PASSWORD) {
                 sessionStorage.setItem(SESSION_KEY, 'authenticated');
                 sessionStorage.setItem(PAGE_ACCESS_KEY, 'login-details');
-                sessionStorage.setItem(SESSION_TIMESTAMP_KEY, Date.now().toString());
                 
                 // Remove modal and show content
                 const modal = document.getElementById('auth-modal');
@@ -550,8 +525,19 @@
             window.location.href = 'index.html';
         }
 
-        // Only clear session on explicit logout, not on page navigation
-        // Removed auto-logout on beforeunload and blur to allow navigation between pages
+        // Auto-logout when leaving page to ensure fresh authentication each visit
+        window.addEventListener('beforeunload', () => {
+            clearSession();
+        });
+
+        // Auto-logout when page loses focus (tab switch, window switch)
+        window.addEventListener('blur', () => {
+            setTimeout(() => {
+                if (document.hidden) {
+                    clearSession();
+                }
+            }, 100);
+        });
 
         // Check authentication on page load
         document.addEventListener('DOMContentLoaded', function() {
