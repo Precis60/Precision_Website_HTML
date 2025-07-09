@@ -124,6 +124,7 @@ h2 {
     align-text: center;
     font-size: 1.5em;
     margin-bottom: 0.5em;
+    font-weight: bold;
 }
 
 p,
@@ -286,4 +287,5 @@ body {
     font-size: 18px;
     cursor: pointer;
     margin-left: auto;
+    margin-right: 16px;
 }
