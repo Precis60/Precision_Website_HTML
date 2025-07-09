@@ -119,6 +119,13 @@ h1 {
     margin-bottom: 0.5em;
 }
 
+h2 {
+    color: #000000;
+    align-text: center;
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+
 p,
 ul {
     font-size: 1.2em;
