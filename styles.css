@@ -231,6 +231,13 @@ body {
     font-size: 1.8em;
 }
 
+.grid-sections section:nth-child(1) h2 {
+    /* Center the heading in the first section */
+    text-align: center;
+    align-self: center;
+    margin: 0 auto 0.5em auto;
+}
+
 .grid-sections section:nth-child(2) {
     /* Center content vertically and horizontally */
     justify-content: center;
@@ -272,6 +279,11 @@ body {
         grid-template-rows: 1fr 1fr 1fr;
     }
 
+    .grid-sections section:nth-child(1) h2 {
+        text-align: center;
+        margin: 0 auto 0.5em auto;
+    }
+
     .grid-sections section:nth-child(2) h2 {
         margin: 0 auto;
     }
@@ -281,6 +293,11 @@ body {
     .grid-sections {
         grid-template-columns: 1fr;
         grid-template-rows: none;
+    }
+
+    .grid-sections section:nth-child(1) h2 {
+        text-align: center;
+        margin: 0 auto 0.5em auto;
     }
 
     .grid-sections section:nth-child(2) h2 {
