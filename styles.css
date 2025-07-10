@@ -120,8 +120,8 @@ h1 {
 }
 
 h2 {
-    color: #13065f;
-    font-size: 1.5em;
+    color: #000000;
+    font-size: 2.0em;
     margin-bottom: 0.5em;
     font-weight: bold;
 }
@@ -225,11 +225,10 @@ body {
     min-height: 0;
 }
 
-.grid-sections section:nth-child(2) h2 {
-    /* Center the heading vertically and horizontally in the middle section (top-center) */
-    margin: 0 auto;
-    align-self: center;
-    justify-self: center;
+.grid-sections section h2 {
+    margin-top: 0;
+    color: #000000;
+    font-size: 1.8em;
 }
 
 .grid-sections section:nth-child(2) {
@@ -239,8 +238,11 @@ body {
     text-align: center;
 }
 
-.grid-sections section h2 {
-    margin-top: 0;
+.grid-sections section:nth-child(2) h2 {
+    /* Center the heading vertically and horizontally in the middle section (top-center) */
+    margin: 0 auto;
+    align-self: center;
+    justify-self: center;
 }
 
 .section-bg {
@@ -258,6 +260,10 @@ body {
 .section-bg h2 {
     align-self: center;
     text-align: center;
+    color: #000000;
+    font-size: 2.0em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
 }
 
 @media (max-width: 900px) {
