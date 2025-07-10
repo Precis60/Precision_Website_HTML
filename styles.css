@@ -27,7 +27,7 @@
 }
 
 .mobile-only {
-    display: none;
+    display: none !important;
 }
 
 .logo-and-menu {
@@ -50,11 +50,18 @@
     white-space: nowrap;
 }
 
-.header .logo {
+.logo-and-text .logo {
     display: flex;
     align-items: center;
     text-decoration: none;
     margin-right: 20px;
+}
+
+.logo-and-text .logo-img {
+    height: 60px;
+    width: auto;
+    margin-right: 20px;
+    display: block;
 }
 
 .desktop-menu {
@@ -106,15 +113,15 @@
     }
 
     .logo-and-text {
-        display: none;
+        display: none !important;
     }
 
     .desktop-menu {
-        display: none;
+        display: none !important;
     }
 
     .mobile-only {
-        display: block;
+        display: block !important;
         width: 100%;
     }
 
@@ -145,14 +152,14 @@
         order: 2;
     }
 
-    .header .logo {
+    .mobile-only .header .logo {
         display: flex;
         align-items: center;
         margin: 0;
         width: auto;
     }
 
-    .header .logo-img {
+    .mobile-only .header .logo-img {
         margin-right: 0;
         height: 40px;
     }
