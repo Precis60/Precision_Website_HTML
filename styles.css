@@ -26,10 +26,6 @@
     margin-left: 0;
 }
 
-.mobile-only {
-    display: none !important;
-}
-
 .logo-and-menu {
     display: flex;
     align-items: center;
@@ -120,11 +116,6 @@
         display: none !important;
     }
 
-    .mobile-only {
-        display: block !important;
-        width: 100%;
-    }
-
     .logo-and-menu {
         display: flex;
         flex-direction: column;
@@ -150,18 +141,6 @@
         align-items: center;
         width: 100%;
         order: 2;
-    }
-
-    .mobile-only .header .logo {
-        display: flex;
-        align-items: center;
-        margin: 0;
-        width: auto;
-    }
-
-    .mobile-only .header .logo-img {
-        margin-right: 0;
-        height: 40px;
     }
 
     .menu-toggle {
