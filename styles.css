@@ -113,7 +113,7 @@
 
     body {
         padding-top: 25px;
-        padding-bottom: 77px;
+        padding-bottom: 25px;
     }
 }
 
@@ -162,7 +162,7 @@ body {
     margin: 0;
     padding: 0;
     padding-top: 25px;
-    padding-bottom: 64px;
+    padding-bottom: 25px;
     box-sizing: border-box;
 }
 
