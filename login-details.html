@@ -6,233 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Details | Precision Cabling & Automation</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login-details.css">
     <script src="config.js"></script>
     <script src="data-manager.js"></script>
-    <style>
-        /* Login Details specific styles */
-        .login-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .login-form {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            margin-bottom: 30px;
-        }
-
-        .login-form h3 {
-            margin-top: 0;
-            color: #1a237e;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-
-        .btn {
-            background-color: #03f3d7;
-            color: #050000;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-            margin-right: 10px;
-        }
-
-        .btn:hover {
-            background-color: #02d4b8;
-        }
-
-        .btn-cancel {
-            background-color: #6c757d;
-            color: white;
-        }
-
-        .btn-cancel:hover {
-            background-color: #5a6268;
-        }
-
-        .login-table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .login-table th,
-        .login-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .login-table th {
-            background-color: #1a237e;
-            color: white;
-            font-weight: bold;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .login-table tr:hover {
-            background-color: #f5f5f5;
-        }
-
-        .table-container {
-            max-height: 500px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-
-        .password-cell {
-            position: relative;
-        }
-
-        .password-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #1a237e;
-            font-size: 12px;
-            padding: 2px 5px;
-            margin-left: 5px;
-        }
-
-        .password-toggle:hover {
-            background-color: #e0e0e0;
-            border-radius: 3px;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 5px;
-        }
-
-        .btn-edit,
-        .btn-delete {
-            padding: 5px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: background-color 0.3s;
-        }
-
-        .btn-edit {
-            background-color: #17a2b8;
-            color: white;
-        }
-
-        .btn-edit:hover {
-            background-color: #138496;
-        }
-
-        .btn-delete {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .btn-delete:hover {
-            background-color: #c82333;
-        }
-
-        .url-link {
-            color: #1a237e;
-            text-decoration: none;
-        }
-
-        .url-link:hover {
-            text-decoration: underline;
-        }
-
-        .search-filter {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f0f0f0;
-            border-radius: 8px;
-        }
-
-        .search-input {
-            width: 100%;
-            max-width: 400px;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        .edit-mode {
-            background-color: #fff3cd;
-            border-color: #ffeaa7;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        @media screen and (max-width: 768px) {
-            .login-table {
-                font-size: 14px;
-            }
-            
-            .login-table th,
-            .login-table td {
-                padding: 8px;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
 </head>
 
 <body>
     <div class="header">
-        <a href="index.html" class="logo">
-            <img src="images/logo.jpg" alt="Precision Cabling & Automation Logo" class="logo-img">
-            <span class="logo-text">
-                Precision Cabling & Automation
-            </span>
-        </a>
-        <button class="menu-toggle" id="menuToggle">☰ Menu</button>
+        <!-- Desktop Header Structure -->
+        <div class="desktop-logo-text">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="Precision Cabling & Automation Logo" class="logo-img">
+                <span class="logo-text">Precision Cabling & Automation</span>
+            </a>
+        </div>
+
+        <!-- Mobile Header Structure -->
+        <div class="mobile-company-name">
+            <span class="logo-text">Precision Cabling & Automation</span>
+        </div>
+        <div class="logo-and-menu-row">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="Precision Cabling & Automation Logo" class="logo-img">
+            </a>
+            <button class="menu-toggle" id="menuToggle">☰ Menu</button>
+        </div>
+
+        <!-- Navigation Links (for dropdown) -->
         <div class="header-right" id="dropdownMenu">
             <a href="index.html">Home</a>
             <a href="services.html">Services</a>
@@ -249,541 +49,70 @@
 
     <main>
         <div class="login-container">
-            <h1>Login Details Manager</h1>
-            <p>Securely manage your website and software login credentials.</p>
-
-            <div class="login-form" id="form-container">
-                <h3 id="form-title">Add New Login</h3>
-                <form id="loginForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="siteSoftware">Site/Software:</label>
-                            <input type="text" id="siteSoftware" name="siteSoftware" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="company">Company:</label>
-                            <input type="text" id="company" name="company">
-                        </div>
-                        <div class="form-group">
-                            <label for="url">URL:</label>
-                            <input type="url" id="url" name="url" placeholder="https://example.com">
-                        </div>
+            <form id="login-form" class="login-form">
+                <h3>Add/Edit Login Details</h3>
+                <input type="hidden" id="login-id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="login-name">Name</label>
+                        <input type="text" id="login-name" required>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">Email Address:</label>
-                            <input type="email" id="email" name="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="username">Username:</label>
-                            <input type="text" id="username" name="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="password" id="password" name="password" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="login-url">URL</label>
+                        <input type="url" id="login-url">
                     </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn" id="submit-btn">Add Login</button>
-                        <button type="button" class="btn btn-cancel" id="cancel-btn" onclick="cancelEdit()" style="display: none;">Cancel Edit</button>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="login-username">Username</label>
+                        <input type="text" id="login-username" required>
                     </div>
-                </form>
-            </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="login-notes">Notes</label>
+                    <textarea id="login-notes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn">Save</button>
+                <button type="button" id="cancel-edit" class="btn btn-cancel" style="display: none;">Cancel</button>
+            </form>
 
-            <div class="search-filter">
-                <label for="searchInput">Search Logins:</label>
-                <input type="text" id="searchInput" class="search-input" placeholder="Search by site, company, or username..." onkeyup="filterLogins()">
-            </div>
-
-            <div class="table-container">
-                <table class="login-table" id="loginTable">
-                    <thead>
-                        <tr>
-                            <th>Site/Software</th>
-                            <th>Company</th>
-                            <th>URL</th>
-                            <th>Email</th>
-                            <th>Username</th>
-                            <th>Password</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="loginTableBody">
-                        <!-- Login entries will be displayed here -->
-                    </tbody>
-                </table>
-            </div>
+            <table id="login-table" class="login-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>URL</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Login details will be populated here -->
+                </tbody>
+            </table>
         </div>
     </main>
 
     <footer class="site-footer">
         <div class="footer-content">
-            <span><strong>Precision Cabling & Automation</strong> | YARRAVILLE VIC 3013 |
-                <a href="mailto:jamie@projectconsultants.org" class="footer-link">jamie@projectconsultants.org</a>
-            </span>
-            <span>ABN 94 921 400 822 |
-                <a href="tel:0413729663" class="footer-link">0413 729 663</a>
-            </span>
+            <span>Precision Cabling & Automation | ABN: 12 345 678 910</span>
+            <span><a href="contact.html" class="footer-link">Contact Us</a> | <a href="about.html" class="footer-link">Privacy Policy</a></span>
         </div>
     </footer>
 
+    <script src="login-details.js"></script>
     <script>
-        // Authentication System
-        const VALID_USERNAME = 'admin';
-        const VALID_PASSWORD = 'PrecisionAdmin2025!';
-        const SESSION_KEY = 'precision_auth_session';
-        const PAGE_ACCESS_KEY = 'precision_page_access';
-        const SESSION_TIMESTAMP_KEY = 'precision_auth_timestamp';
-        const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
-
-        // Initialize Data Manager
-        let dataManager;
-        
-        // Initialize dataManager after DOM loads to ensure CONFIG is available
-        function initializeDataManager() {
-            try {
-                dataManager = new DataManager(CONFIG?.USE_ONLINE_STORAGE || false);
-            } catch (error) {
-                console.error('Failed to initialize DataManager:', error);
-                // Fallback to localStorage only
-                dataManager = new DataManager(false);
-            }
-        }
-
-        function checkAuthentication() {
-            const session = sessionStorage.getItem(SESSION_KEY);
-            const pageAccess = sessionStorage.getItem(PAGE_ACCESS_KEY);
-            
-            console.log('Login Details Authentication check:', {
-                session: session,
-                pageAccess: pageAccess
-            });
-            
-            // Require fresh authentication for this page - no session sharing between pages
-            if (!session || session !== 'authenticated' || pageAccess !== 'login-details') {
-                console.log('Login Details Authentication failed - requiring fresh login');
-                clearSession();
-                showLoginModal();
-                return false;
-            }
-            
-            console.log('Login Details Authentication passed');
-            return true;
-        }
-
-        function clearSession() {
-            sessionStorage.removeItem(SESSION_KEY);
-            sessionStorage.removeItem(PAGE_ACCESS_KEY);
-        }
-
-        function showLoginModal() {
-            // Hide main content
-            const mainContent = document.querySelector('main');
-            const header = document.querySelector('.header');
-            const footer = document.querySelector('.site-footer');
-            
-            if (mainContent) mainContent.style.display = 'none';
-            if (header) header.style.display = 'none';
-            if (footer) footer.style.display = 'none';
-
-            // Create login modal
-            const modal = document.createElement('div');
-            modal.id = 'auth-modal';
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 10000;
-                font-family: Arial, sans-serif;
-            `;
-
-            modal.innerHTML = `
-                <div style="
-                    background: white;
-                    padding: 40px;
-                    border-radius: 10px;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                    text-align: center;
-                    max-width: 400px;
-                    width: 90%;
-                ">
-                    <h2 style="color: #1a237e; margin-bottom: 20px;">Secure Access Required</h2>
-                    <p style="color: #666; margin-bottom: 30px;">Please enter your credentials to access this page.</p>
-                    
-                    <div style="margin-bottom: 20px;">
-                        <input type="text" id="login-username" placeholder="Username" style="
-                            width: 100%;
-                            padding: 12px;
-                            border: 1px solid #ddd;
-                            border-radius: 5px;
-                            font-size: 16px;
-                            box-sizing: border-box;
-                            margin-bottom: 15px;
-                        ">
-                        <input type="password" id="login-password" placeholder="Password" style="
-                            width: 100%;
-                            padding: 12px;
-                            border: 1px solid #ddd;
-                            border-radius: 5px;
-                            font-size: 16px;
-                            box-sizing: border-box;
-                        ">
-                    </div>
-                    
-                    <div id="login-error" style="
-                        color: #d32f2f;
-                        margin-bottom: 20px;
-                        display: none;
-                    ">Invalid credentials. Please try again.</div>
-                    
-                    <button id="login-btn" style="
-                        background-color: #03f3d7;
-                        color: #050000;
-                        border: none;
-                        padding: 12px 30px;
-                        border-radius: 5px;
-                        font-size: 16px;
-                        font-weight: bold;
-                        cursor: pointer;
-                        margin-right: 10px;
-                        transition: background-color 0.3s;
-                    ">Login</button>
-                    
-                    <button id="cancel-btn" style="
-                        background-color: #6c757d;
-                        color: white;
-                        border: none;
-                        padding: 12px 30px;
-                        border-radius: 5px;
-                        font-size: 16px;
-                        cursor: pointer;
-                        transition: background-color 0.3s;
-                    ">Cancel</button>
-                </div>
-            `;
-
-            document.body.appendChild(modal);
-
-            // Add event listeners
-            document.getElementById('login-btn').addEventListener('click', handleLogin);
-            document.getElementById('cancel-btn').addEventListener('click', () => {
-                window.location.href = 'index.html';
-            });
-
-            // Enter key support
-            document.getElementById('login-username').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') document.getElementById('login-password').focus();
-            });
-            document.getElementById('login-password').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') handleLogin();
-            });
-
-            // Focus on username field
-            document.getElementById('login-username').focus();
-        }
-
-        function handleLogin() {
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            const errorDiv = document.getElementById('login-error');
-
-            if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-                sessionStorage.setItem(SESSION_KEY, 'authenticated');
-                sessionStorage.setItem(PAGE_ACCESS_KEY, 'login-details');
-                
-                // Remove modal and show content
-                const modal = document.getElementById('auth-modal');
-                if (modal) modal.remove();
-                
-                const mainContent = document.querySelector('main');
-                const header = document.querySelector('.header');
-                const footer = document.querySelector('.site-footer');
-                
-                if (mainContent) mainContent.style.display = 'block';
-                if (header) header.style.display = 'flex';
-                if (footer) footer.style.display = 'block';
-
-                // Initialize page functionality
-                if (typeof displayLogins === 'function') {
-                    displayLogins();
-                }
-            } else {
-                errorDiv.style.display = 'block';
-                document.getElementById('login-password').value = '';
-                document.getElementById('login-password').focus();
-            }
-        }
-
-        function logout() {
-            clearSession();
-            window.location.href = 'index.html';
-        }
-
-        // Auto-logout when leaving page to ensure fresh authentication each visit
-        window.addEventListener('beforeunload', () => {
-            clearSession();
-        });
-
-        // Auto-logout when page loses focus (tab switch, window switch)
-        window.addEventListener('blur', () => {
-            setTimeout(() => {
-                if (document.hidden) {
-                    clearSession();
-                }
-            }, 100);
-        });
-
-        // Check authentication on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize DataManager first
-            initializeDataManager();
-            
-            if (checkAuthentication()) {
-                initializeLoginDetails();
-                // Add form submission handler
-                document.getElementById('loginForm').addEventListener('submit', addLogin);
-            }
-        });
-
-        // Login Details functionality
-        let logins = [];
-        let editingLogin = null;
-
-        async function initializeLoginDetails() {
-            try {
-                logins = await dataManager.getLoginDetails();
-                displayLogins();
-            } catch (error) {
-                console.error('Error loading login details:', error);
-                logins = [];
-                displayLogins();
-            }
-        }
-
-        function addLogin(event) {
-            event.preventDefault();
-
-            const siteSoftware = document.getElementById('siteSoftware').value;
-            const company = document.getElementById('company').value;
-            const url = document.getElementById('url').value;
-            const email = document.getElementById('email').value;
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if (siteSoftware && username && password) {
-                handleSaveLogin(siteSoftware, company, url, email, username, password);
-            }
-        }
-
-        async function handleSaveLogin(siteSoftware, company, url, email, username, password) {
-            try {
-                let isEditing = editingLogin !== null;
-                
-                if (editingLogin) {
-                    // Update existing login
-                    const updatedLogin = {
-                        ...editingLogin,
-                        siteSoftware: siteSoftware,
-                        company: company,
-                        url: url,
-                        email: email,
-                        username: username,
-                        password: password
-                    };
-                    
-                    await dataManager.saveLoginDetail(updatedLogin);
-                    
-                    const loginIndex = logins.findIndex(l => l.id === editingLogin.id);
-                    if (loginIndex !== -1) {
-                        logins[loginIndex] = updatedLogin;
-                    }
-                    
-                    editingLogin = null;
-                    document.getElementById('form-title').textContent = 'Add New Login';
-                    document.getElementById('form-container').classList.remove('edit-mode');
-                    document.getElementById('submit-btn').textContent = 'Add Login';
-                    document.getElementById('cancel-btn').style.display = 'none';
-                } else {
-                    // Add new login
-                    const newLogin = {
-                        siteSoftware: siteSoftware,
-                        company: company,
-                        url: url,
-                        email: email,
-                        username: username,
-                        password: password
-                    };
-                    
-                    const savedLogin = await dataManager.saveLoginDetail(newLogin);
-                    logins.push(savedLogin);
-                }
-
-                // Clear form
-                document.getElementById('loginForm').reset();
-
-                // Update table display
-                displayLogins();
-
-                alert(isEditing ? 'Login updated successfully!' : 'Login added successfully!');
-            } catch (error) {
-                console.error('Error saving login:', error);
-                alert('Error saving login. Please try again.');
-            }
-        }
-
-        function editLogin(loginId) {
-            const login = logins.find(l => l.id === loginId);
-            if (!login) return;
-
-            editingLogin = login;
-
-            // Populate form with login data
-            document.getElementById('siteSoftware').value = login.siteSoftware;
-            document.getElementById('company').value = login.company || '';
-            document.getElementById('url').value = login.url || '';
-            document.getElementById('email').value = login.email || '';
-            document.getElementById('username').value = login.username;
-            document.getElementById('password').value = login.password;
-
-            // Update form title and style
-            document.getElementById('form-title').textContent = 'Edit Login';
-            document.getElementById('form-container').classList.add('edit-mode');
-            document.getElementById('submit-btn').textContent = 'Update Login';
-            document.getElementById('cancel-btn').style.display = 'inline-block';
-
-            // Scroll to form
-            document.getElementById('form-container').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function cancelEdit() {
-            editingLogin = null;
-            document.getElementById('form-title').textContent = 'Add New Login';
-            document.getElementById('form-container').classList.remove('edit-mode');
-            document.getElementById('submit-btn').textContent = 'Add Login';
-            document.getElementById('cancel-btn').style.display = 'none';
-            document.getElementById('loginForm').reset();
-        }
-
-        function deleteLogin(loginId) {
-            if (confirm('Are you sure you want to delete this login?')) {
-                handleDeleteLogin(loginId);
-            }
-        }
-
-        async function handleDeleteLogin(loginId) {
-            try {
-                await dataManager.deleteLoginDetail(loginId);
-                logins = logins.filter(login => login.id !== loginId);
-                displayLogins();
-            } catch (error) {
-                console.error('Error deleting login:', error);
-                alert('Error deleting login. Please try again.');
-            }
-        }
-
-        function togglePassword(loginId) {
-            const passwordCell = document.querySelector(`[data-password-id="${loginId}"]`);
-            const button = passwordCell.querySelector('.password-toggle');
-            
-            if (button.textContent === 'Show') {
-                const login = logins.find(l => l.id === loginId);
-                passwordCell.innerHTML = `
-                    ${login.password}
-                    <button class="password-toggle" onclick="togglePassword(${loginId})">Hide</button>
-                `;
-            } else {
-                passwordCell.innerHTML = `
-                    ••••••••
-                    <button class="password-toggle" onclick="togglePassword(${loginId})">Show</button>
-                `;
-            }
-        }
-
-        function filterLogins() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const rows = document.querySelectorAll('#loginTableBody tr');
-
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        }
-
-        function displayLogins() {
-            const tableBody = document.getElementById('loginTableBody');
-            tableBody.innerHTML = '';
-
-            if (logins.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px;">No login details saved yet.</td></tr>';
-                return;
-            }
-
-            // Sort logins by site/software name
-            logins.sort((a, b) => a.siteSoftware.localeCompare(b.siteSoftware));
-
-            logins.forEach(login => {
-                const row = document.createElement('tr');
-                
-                const urlCell = login.url ? 
-                    `<a href="${login.url}" target="_blank" class="url-link">${login.url}</a>` : 
-                    '-';
-
-                row.innerHTML = `
-                    <td>${login.siteSoftware}</td>
-                    <td>${login.company || '-'}</td>
-                    <td>${urlCell}</td>
-                    <td>${login.email || '-'}</td>
-                    <td>${login.username}</td>
-                    <td class="password-cell" data-password-id="${login.id}">
-                        ••••••••
-                        <button class="password-toggle" onclick="togglePassword(${login.id})">Show</button>
-                    </td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn-edit" onclick="editLogin(${login.id})">Edit</button>
-                            <button class="btn-delete" onclick="deleteLogin(${login.id})">Delete</button>
-                        </div>
-                    </td>
-                `;
-
-                tableBody.appendChild(row);
-            });
-        }
-
-        // Initialize the page (removed - now handled in authentication check)
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     displayLogins();
-        //     // Add form submission handler
-        //     document.getElementById('loginForm').addEventListener('submit', addLogin);
-        // });
-    </script>
-    <script>
-        document.getElementById('menuToggle').addEventListener('click', function () {
+        document.getElementById('menuToggle').addEventListener('click', function() {
             var menu = document.getElementById('dropdownMenu');
-            if (menu.style.display === 'flex') {
-                menu.style.display = 'none';
-            } else {
-                menu.style.display = 'flex';
-            }
+            menu.classList.toggle('open');
         });
     </script>
-    <script>
-        const menuToggle = document.querySelector('.menu-toggle');
-        const headerRight = document.querySelector('.header-right');
-        menuToggle.addEventListener('click', () => {
-            headerRight.classList.toggle('open');
-        });
-    </script>
+
 </body>
 
 </html>

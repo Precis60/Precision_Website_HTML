@@ -1,4 +1,3 @@
-
 /* Fixed Header and Footer Layout */
 /* Header and footer are fixed to viewport, body content scrolls independently */
 
@@ -59,34 +58,17 @@
 }
 
 .menu-toggle {
-    display: block;
+    display: flex;
     background: #000;
     color: #fff;
     border: none;
     padding: 8px 12px;
     font-size: 20px;
     cursor: pointer;
-    margin: 0;
-    margin-right: 40px;
     height: 40px;
     align-items: center;
     justify-content: center;
-}
-
-
-
-.menu-toggle {
-    display: block;
-    background: #000;
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    font-size: 20px;
-    cursor: pointer;
-    margin: 0;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
+    margin-right: 40px; /* Default for desktop */
 }
 
 .header a {
@@ -113,7 +95,7 @@
     .header {
         flex-direction: column;
         align-items: stretch;
-        padding: 3px 8px;
+        padding: 10px 0;
         height: auto;
     }
 
@@ -146,6 +128,8 @@
         align-items: center;
         width: 100%;
         order: 2;
+        padding: 0 40px;
+        box-sizing: border-box;
     }
 
     .logo-and-menu-row .logo {
@@ -168,7 +152,7 @@
         padding: 8px 12px;
         font-size: 20px;
         cursor: pointer;
-        margin: 0;
+        margin: 0; /* Reset margin for mobile */
         height: 40px;
         align-items: center;
         justify-content: center;
@@ -178,8 +162,9 @@
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 60px;
-        right: 20px;
+        top: 100%;
+        left: 0;
+        right: 0;
         background: #fff;
         border: 1px solid #ccc;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -202,7 +187,7 @@
     }
 
     body {
-        padding-top: 40px;
+        padding-top: 110px; /* Adjusted for taller mobile header */
         padding-bottom: 25px;
     }
 }

@@ -1,0 +1,181 @@
+/* Calendar-specific styles */
+.calendar-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.calendar-header h2 {
+    margin: 0;
+    color: #1a237e;
+    font-size: 1.8em;
+}
+
+.nav-button {
+    background-color: #03f3d7;
+    border: none;
+    color: #050000;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+    background-color: #02d4b8;
+}
+
+.view-switcher {
+    margin-bottom: 10px;
+}
+
+.view-btn {
+    background-color: #e0e0e0;
+    border: 1px solid #ccc;
+    color: #333;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.view-btn:hover,
+.view-btn.active {
+    background-color: #1a237e;
+    color: white;
+    border-color: #1a237e;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background-color: #ddd;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.day-header {
+    background-color: #1a237e;
+    color: white;
+    padding: 15px 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.calendar-day {
+    background-color: white;
+    padding: 15px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    min-height: 100px;
+    position: relative;
+}
+
+.calendar-day:hover {
+    background-color: #f0f0f0;
+}
+
+.day-number {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.other-month {
+    color: #aaa;
+    background-color: #f9f9f9;
+}
+
+.today {
+    background-color: #e3f2fd;
+    border: 2px solid #1a237e;
+}
+
+.event {
+    background-color: #03f3d7;
+    color: #050000;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#event-form label {
+    display: block;
+    margin-top: 10px;
+}
+
+#event-form input,
+#event-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+#event-form button {
+    margin-top: 15px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}

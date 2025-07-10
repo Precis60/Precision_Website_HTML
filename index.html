@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +10,26 @@
 
 <body>
     <div class="header">
-        <a href="index.html" class="logo">
-            <img src="images/logo.jpg" alt="Precision Cabling & Automation Logo" class="logo-img">
-            <span class="logo-text">
-                Precision Cabling & Automation
-            </span>
-        </a>
-        <button class="menu-toggle" id="menuToggle">☰ Menu</button>
+        <!-- Desktop Header Structure -->
+        <div class="desktop-logo-text">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="Precision Cabling & Automation Logo" class="logo-img">
+                <span class="logo-text">Precision Cabling & Automation</span>
+            </a>
+        </div>
+
+        <!-- Mobile Header Structure -->
+        <div class="mobile-company-name">
+            <span class="logo-text">Precision Cabling & Automation</span>
+        </div>
+        <div class="logo-and-menu-row">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="Precision Cabling & Automation Logo" class="logo-img">
+            </a>
+            <button class="menu-toggle" id="menuToggle">☰ Menu</button>
+        </div>
+
+        <!-- Navigation Links (for dropdown) -->
         <div class="header-right" id="dropdownMenu">
             <a class="active" href="index.html">Home</a>
             <a href="services.html">Services</a>
@@ -31,7 +45,7 @@
     </div>
 
     <main>
-        
+
         <div class="grid-sections">
             <section>
                 <h2>Precision Cabling & Automation</h2>
@@ -98,44 +112,31 @@
                     solutions that keep your home or business powered and up to date with the latest technology.</p>
             </section>
             <section>
-                <h2>Miscellaneous & Consultation</h2>
-                <p>Our consultants are dedicated to helping you find solutions where others see obstacles. With a
-                    commitment to innovation and problem-solving, we take on challenges that others say can’t be done.
-                    Whether your needs are straightforward or highly complex, our experienced team works closely with
-                    you to understand your goals and deliver tailored results. We pride ourselves on our resourcefulness
-                    and expertise, ensuring you always have expert guidance and support. Trust us to turn the impossible
-                    into possible and provide solutions that truly make a difference.
+                <h2>About Us</h2>
+                <p>We are a leading provider of structured cabling, network design, and automation solutions, dedicated
+                    to helping businesses of all sizes thrive in a connected world. Our team of experienced
+                    professionals is committed to delivering high-quality, reliable, and scalable infrastructure that
+                    meets the unique needs of each client. With a focus on innovation and customer satisfaction, we
+                    strive to be your trusted partner in building a robust foundation for your organisation's success.
                 </p>
             </section>
         </div>
     </main>
+
     <footer class="site-footer">
         <div class="footer-content">
-            <span><strong>Precision Cabling & Automation</strong> | YARRAVILLE VIC 3013 |
-                <a href="mailto:jamie@projectconsultants.org" class="footer-link">jamie@projectconsultants.org</a>
-            </span>
-            <span>ABN 94 921 400 822 |
-                <a href="tel:0413729663" class="footer-link">0413 729 663</a>
-            </span>
+            <span>Precision Cabling & Automation | ABN: 12 345 678 910</span>
+            <span><a href="contact.html" class="footer-link">Contact Us</a> | <a href="about.html" class="footer-link">Privacy Policy</a></span>
         </div>
     </footer>
+
     <script>
-        document.getElementById('menuToggle').addEventListener('click', function () {
+        document.getElementById('menuToggle').addEventListener('click', function() {
             var menu = document.getElementById('dropdownMenu');
-            if (menu.style.display === 'flex') {
-                menu.style.display = 'none';
-            } else {
-                menu.style.display = 'flex';
-            }
+            menu.classList.toggle('open');
         });
     </script>
-    <script>
-        const menuToggle = document.querySelector('.menu-toggle');
-        const headerRight = document.querySelector('.header-right');
-        menuToggle.addEventListener('click', () => {
-            headerRight.classList.toggle('open');
-        });
-    </script>
+
 </body>
 
 </html>

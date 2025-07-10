@@ -10,13 +10,26 @@
 
 <body>
     <div class="header">
-        <a href="index.html" class="logo">
-            <img src="images/logo.jpg" alt="Precision Cabling & Automation Logo" class="logo-img">
-            <span class="logo-text">
-                Precision Cabling & Automation
-            </span>
-        </a>
-        <button class="menu-toggle" id="menuToggle">☰ Menu</button>
+        <!-- Desktop Header Structure -->
+        <div class="desktop-logo-text">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="Precision Cabling & Automation Logo" class="logo-img">
+                <span class="logo-text">Precision Cabling & Automation</span>
+            </a>
+        </div>
+
+        <!-- Mobile Header Structure -->
+        <div class="mobile-company-name">
+            <span class="logo-text">Precision Cabling & Automation</span>
+        </div>
+        <div class="logo-and-menu-row">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="Precision Cabling & Automation Logo" class="logo-img">
+            </a>
+            <button class="menu-toggle" id="menuToggle">☰ Menu</button>
+        </div>
+
+        <!-- Navigation Links (for dropdown) -->
         <div class="header-right" id="dropdownMenu">
             <a href="index.html">Home</a>
             <a href="services.html">Services</a>
@@ -97,49 +110,32 @@
                 refurbished replacement parts.</p>
 
             <h2>How long does the coverage last?</h2>
-            <p>The Warranty Period for Physical Goods purchased from Precision Cabling Suppliers Pty Ltd is 365 days
-                from the date of purchase.</p>
-            <p>A replacement Physical Good or part assumes the remaining warranty of the original Physical Good or 365
-                days from the date of replacement or repair, whichever is longer.</p>
-
+            <p>The Warranty Period for Physical Goods purchased from Precision Cabling Suppliers Pty Ltd is 365 days from the date of purchase.</p>
+            <p>A replacement Physical Good or part assumes the remaining warranty of the original Physical Good or 365 days from the date of replacement or repair, whichever is longer.</p>
+            
             <h2>What does this limited warranty not cover?</h2>
             <p>This Limited Warranty does not cover any problem that is caused by:</p>
-            <p>● conditions, malfunctions or damage not resulting from defects in material or workmanship</p>
-
+            <p>conditions, malfunctions or damage not resulting from defects in material or workmanship</p>
+            
             <h2>What do you have to do?</h2>
-            <p>To obtain warranty service, you must first contact us to determine the problem and the most appropriate
-                solution for you. Please make all contact via the following methods:</p>
-            <p>Address: 15a Hawkhurst Street, YARRAVILLE VIC 3013</p>
-            <p>Email: support@precisioncabling.com.au</p>
-            <p>Mobile: 0413 729 663</p>
-        </section>/main>
-        <footer class="site-footer">
-            <div class="footer-content">
-                <span><strong>Precision Cabling & Automation</strong> | YARRAVILLE VIC 3013 |
-                    <a href="mailto:jamie@projectconsultants.org" class="footer-link">jamie@projectconsultants.org</a>
-                </span>
-                <span>ABN 94 921 400 822 |
-                    <a href="tel:0413729663" class="footer-link">0413 729 663</a>
-                </span>
-            </div>
-        </footer>
-        <script>
-            document.getElementById('menuToggle').addEventListener('click', function () {
-                var menu = document.getElementById('dropdownMenu');
-                if (menu.style.display === 'flex') {
-                    menu.style.display = 'none';
-                } else {
-                    menu.style.display = 'flex';
-                }
-            });
-        </script>
-        <script>
-            const menuToggle = document.querySelector('.menu-toggle');
-            const headerRight = document.querySelector('.header-right');
-            menuToggle.addEventListener('click', () => {
-                headerRight.classList.toggle('open');
-            });
-        </script>
+            <p>To obtain warranty service, you must first contact us to determine the problem and the most appropriate solution for you.</p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <span>Precision Cabling & Automation | ABN: 12 345 678 910</span>
+            <span><a href="contact.html" class="footer-link">Contact Us</a> | <a href="about.html" class="footer-link">Privacy Policy</a></span>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            var menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('open');
+        });
+    </script>
+
 </body>
 
 </html>
