@@ -4,3 +4,13 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+/* Apply 3-column layout only on screens wider than 900px */
+@media (min-width: 901px) {
+    .grid-sections {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto; /* Reset row heights to fit content */
+        gap: 24px;
+    }
+}
