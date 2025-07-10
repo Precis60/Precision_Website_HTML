@@ -1,8 +1,13 @@
 /* Contacts-specific styles */
+main {
+    max-width: none;
+    padding: 20px 10px;
+}
+
 .contacts-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
+    max-width: none;
+    margin: 0;
+    padding: 0;
 }
 
 .contacts-header {
