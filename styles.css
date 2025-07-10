@@ -90,12 +90,13 @@
     .header .logo-text {
         display: block;
         text-align: center;
-        font-size: 18px;
+        font-size: 16px;
         line-height: 1.2;
         margin-bottom: 5px;
         order: 1;
         color: #410a79;
         font-weight: bold;
+        white-space: nowrap;
     }
 
     .logo-and-menu {
