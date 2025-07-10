@@ -35,7 +35,7 @@
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 64px;
+    top: 50px;
     /* Adjust based on your header height */
     right: 20px;
     background: #fff;
