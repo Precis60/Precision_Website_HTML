@@ -6,7 +6,7 @@
     display: flex;
     align-items: center;
     background-color: #03f3d7;
-    padding: 6px 3px;
+    padding: 3px 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     justify-content: space-between;
     border-bottom: 2px solid #000;
@@ -35,7 +35,7 @@
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 50px;
+    top: 40px;
     /* Adjust based on your header height */
     right: 20px;
     background: #fff;
@@ -99,7 +99,7 @@
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 64px;
+        top: 40px;
         right: 20px;
         background: #fff;
         border: 1px solid #ccc;
@@ -112,7 +112,7 @@
     }
 
     body {
-        padding-top: 72px;
+        padding-top: 45px;
         padding-bottom: 77px;
     }
 }
@@ -161,7 +161,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    padding-top: 64px;
+    padding-top: 40px;
     padding-bottom: 64px;
     box-sizing: border-box;
 }
