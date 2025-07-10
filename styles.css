@@ -271,17 +271,17 @@ body {
 }
 
 .grid-sections section:nth-child(2) {
-    /* Center content vertically and horizontally */
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    /* Align content to the top like other sections */
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
 }
 
 .grid-sections section:nth-child(2) h2 {
-    /* Center the heading vertically and horizontally in the middle section (top-center) */
-    margin: 0 auto;
+    /* Center only the heading horizontally */
+    text-align: center;
     align-self: center;
-    justify-self: center;
+    margin: 0 auto 0.5em auto;
 }
 
 .section-bg {
