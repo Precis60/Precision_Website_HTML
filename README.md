@@ -5,7 +5,6 @@ A modern, responsive website for Precision Cabling & Automation featuring:
 - **Services Overview** - Comprehensive automation solutions
 - **Project Portfolio** - Showcase of completed work
 - **Contact Management** - Client contact form with local storage
-- **Event Calendar** - Interactive calendar for scheduling
 - **Support Resources** - FAQ and technical support
 
 ## Features
@@ -13,7 +12,6 @@ A modern, responsive website for Precision Cabling & Automation featuring:
 - Fully responsive design
 - Client-side data storage using localStorage
 - Interactive contact forms
-- Event calendar management
 - Modern UI/UX design
 
 ## GitHub Pages Deployment
