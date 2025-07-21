@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Precision Cabling & Automation</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 
 <body>
@@ -187,6 +189,7 @@
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Submit Registration</button>
                     <button type="reset" class="btn btn-secondary">Clear Form</button>
+                    <button type="button" class="btn btn-alternative" id="mailtoFallback" style="display:none;">Send via Email Client</button>
                 </div>
             </form>
         </section>
@@ -203,45 +206,132 @@
             menu.classList.toggle('open');
         });
 
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+        })();
+
         // Client Registration Form Handler
         document.getElementById('clientRegistrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Show loading state
+            const submitBtn = document.querySelector('.btn-primary');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
             // Get form data
             const formData = new FormData(this);
             const registrationData = {
-                timestamp: new Date().toISOString(),
+                timestamp: new Date().toLocaleString('en-AU', { timeZone: 'Australia/Melbourne' }),
                 firstName: formData.get('firstName'),
                 lastName: formData.get('lastName'),
                 email: formData.get('email'),
                 phone: formData.get('phone'),
-                company: formData.get('company'),
-                position: formData.get('position'),
-                address: formData.get('address'),
+                company: formData.get('company') || 'Not provided',
+                position: formData.get('position') || 'Not provided',
+                address: formData.get('address') || 'Not provided',
                 serviceType: formData.get('serviceType'),
-                projectScale: formData.get('projectScale'),
-                budget: formData.get('budget'),
-                timeline: formData.get('timeline'),
+                projectScale: formData.get('projectScale') || 'Not specified',
+                budget: formData.get('budget') || 'Not specified',
+                timeline: formData.get('timeline') || 'Not specified',
                 projectDescription: formData.get('projectDescription'),
-                hearAboutUs: formData.get('hearAboutUs'),
-                newsletter: formData.get('newsletter') === 'on',
-                terms: formData.get('terms') === 'on'
+                hearAboutUs: formData.get('hearAboutUs') || 'Not specified',
+                newsletter: formData.get('newsletter') === 'on' ? 'Yes' : 'No'
             };
 
-            // Store in localStorage
-            let registrations = JSON.parse(localStorage.getItem('clientRegistrations') || '[]');
-            registrations.push(registrationData);
-            localStorage.setItem('clientRegistrations', JSON.stringify(registrations));
+            // Prepare email template parameters
+            const templateParams = {
+                to_email: 'jamie@projectconsultants.org',
+                from_name: `${registrationData.firstName} ${registrationData.lastName}`,
+                client_name: `${registrationData.firstName} ${registrationData.lastName}`,
+                client_email: registrationData.email,
+                client_phone: registrationData.phone,
+                client_company: registrationData.company,
+                client_position: registrationData.position,
+                client_address: registrationData.address,
+                service_type: registrationData.serviceType,
+                project_scale: registrationData.projectScale,
+                budget_range: registrationData.budget,
+                timeline: registrationData.timeline,
+                project_description: registrationData.projectDescription,
+                hear_about_us: registrationData.hearAboutUs,
+                newsletter_subscription: registrationData.newsletter,
+                submission_date: registrationData.timestamp,
+                subject: `New Client Registration from ${registrationData.firstName} ${registrationData.lastName}`
+            };
 
-            // Show success message
-            alert('Thank you for registering! We have received your information and will contact you within 24 hours to discuss your project requirements.');
-            
-            // Reset form
-            this.reset();
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Send email using EmailJS
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    
+                    // Store in localStorage as backup
+                    let registrations = JSON.parse(localStorage.getItem('clientRegistrations') || '[]');
+                    registrations.push(registrationData);
+                    localStorage.setItem('clientRegistrations', JSON.stringify(registrations));
+
+                    // Show success message
+                    alert('Thank you for registering! Your details have been sent to our team. We will contact you within 24 hours to discuss your project requirements.');
+                    
+                    // Reset form
+                    document.getElementById('clientRegistrationForm').reset();
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    
+                    // Store in localStorage as fallback
+                    let registrations = JSON.parse(localStorage.getItem('clientRegistrations') || '[]');
+                    registrations.push(registrationData);
+                    localStorage.setItem('clientRegistrations', JSON.stringify(registrations));
+                    
+                    // Show fallback button
+                    document.getElementById('mailtoFallback').style.display = 'inline-block';
+                    document.getElementById('mailtoFallback').onclick = () => sendViaMailto(registrationData);
+                    
+                    alert('We encountered an issue sending the email automatically. Please use the "Send via Email Client" button below, or contact us directly at jamie@projectconsultants.org or call 0413 729 663.');
+                })
+                .finally(function() {
+                    // Reset button state
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                });
         });
+
+        // Alternative: Mailto fallback function
+        function sendViaMailto(registrationData) {
+            const subject = encodeURIComponent(`New Client Registration from ${registrationData.firstName} ${registrationData.lastName}`);
+            const body = encodeURIComponent(`
+Client Registration Details:
+
+Name: ${registrationData.firstName} ${registrationData.lastName}
+Email: ${registrationData.email}
+Phone: ${registrationData.phone}
+Company: ${registrationData.company}
+Position: ${registrationData.position}
+Address: ${registrationData.address}
+
+Service Required: ${registrationData.serviceType}
+Project Scale: ${registrationData.projectScale}
+Budget Range: ${registrationData.budget}
+Timeline: ${registrationData.timeline}
+
+Project Description:
+${registrationData.projectDescription}
+
+How they heard about us: ${registrationData.hearAboutUs}
+Newsletter subscription: ${registrationData.newsletter}
+
+Submitted: ${registrationData.timestamp}
+            `);
+            
+            const mailtoLink = `mailto:jamie@projectconsultants.org?subject=${subject}&body=${body}`;
+            window.open(mailtoLink, '_blank');
+        }
 
         // Form validation enhancement
         document.getElementById('email').addEventListener('blur', function() {
