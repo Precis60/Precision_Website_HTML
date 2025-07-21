@@ -3,7 +3,6 @@
 A modern, responsive website for Precision Cabling & Automation featuring:
 
 - **Services Overview** - Comprehensive automation solutions
-- **Project Portfolio** - Showcase of completed work
 - **Contact Management** - Client contact form with local storage
 - **Support Resources** - FAQ and technical support
 
