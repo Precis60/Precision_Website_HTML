@@ -51,7 +51,144 @@
                 <li><strong>Phone:</strong> 0413 729 663</li>
                 <li><strong>Address:</strong> 15a Hawkhurst Street, Yarraville, VIC 3013</li>
             </ul>
-            <!-- You can add a contact form here if needed -->
+        </section>
+
+        <section class="section-bg">
+            <h2>New Client Registration</h2>
+            <p>New to Precision Cabling & Automation? Register your details below and we'll get in touch to discuss your project requirements:</p>
+            
+            <form id="clientRegistrationForm" class="registration-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name *</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name *</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="company">Company Name</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    <div class="form-group">
+                        <label for="position">Position/Role</label>
+                        <input type="text" id="position" name="position">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" rows="3" placeholder="Full address including suburb, state, and postcode"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="serviceType">Service Required *</label>
+                        <select id="serviceType" name="serviceType" required>
+                            <option value="">Select a service</option>
+                            <option value="structured-cabling">Structured Cabling</option>
+                            <option value="network-design">Network Design & Implementation</option>
+                            <option value="security-access">Security & Access Control</option>
+                            <option value="cctv-intercom">CCTV & Intercom Systems</option>
+                            <option value="electrical-automation">Electrical & Automation</option>
+                            <option value="network-it">Network & IT Services</option>
+                            <option value="consultation">General Consultation</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="projectScale">Project Scale</label>
+                        <select id="projectScale" name="projectScale">
+                            <option value="">Select scale</option>
+                            <option value="residential">Residential</option>
+                            <option value="small-business">Small Business</option>
+                            <option value="medium-business">Medium Business</option>
+                            <option value="enterprise">Large Enterprise</option>
+                            <option value="industrial">Industrial</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="budget">Estimated Budget Range</label>
+                        <select id="budget" name="budget">
+                            <option value="">Select budget range</option>
+                            <option value="under-5k">Under $5,000</option>
+                            <option value="5k-15k">$5,000 - $15,000</option>
+                            <option value="15k-50k">$15,000 - $50,000</option>
+                            <option value="50k-100k">$50,000 - $100,000</option>
+                            <option value="over-100k">Over $100,000</option>
+                            <option value="discuss">Prefer to discuss</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="timeline">Project Timeline</label>
+                        <select id="timeline" name="timeline">
+                            <option value="">Select timeline</option>
+                            <option value="urgent">Urgent (Within 2 weeks)</option>
+                            <option value="1month">Within 1 month</option>
+                            <option value="3months">Within 3 months</option>
+                            <option value="6months">Within 6 months</option>
+                            <option value="flexible">Flexible</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectDescription">Project Description *</label>
+                    <textarea id="projectDescription" name="projectDescription" rows="4" placeholder="Please describe your project requirements, current setup, and any specific needs or challenges" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="hearAboutUs">How did you hear about us?</label>
+                    <select id="hearAboutUs" name="hearAboutUs">
+                        <option value="">Select an option</option>
+                        <option value="google">Google Search</option>
+                        <option value="referral">Referral from client</option>
+                        <option value="social-media">Social Media</option>
+                        <option value="trade-directory">Trade Directory</option>
+                        <option value="repeat-client">Returning Client</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="newsletter" name="newsletter">
+                        <span class="checkmark"></span>
+                        I would like to receive updates about services and industry news
+                    </label>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <span class="checkmark"></span>
+                        I agree to the <a href="about.html" target="_blank">Privacy Policy</a> and consent to being contacted about this inquiry *
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Submit Registration</button>
+                    <button type="reset" class="btn btn-secondary">Clear Form</button>
+                </div>
+            </form>
         </section>
     </main>
     <footer class="site-footer">
@@ -64,6 +201,67 @@
         document.getElementById('menuToggle').addEventListener('click', function () {
             var menu = document.getElementById('dropdownMenu');
             menu.classList.toggle('open');
+        });
+
+        // Client Registration Form Handler
+        document.getElementById('clientRegistrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const registrationData = {
+                timestamp: new Date().toISOString(),
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                company: formData.get('company'),
+                position: formData.get('position'),
+                address: formData.get('address'),
+                serviceType: formData.get('serviceType'),
+                projectScale: formData.get('projectScale'),
+                budget: formData.get('budget'),
+                timeline: formData.get('timeline'),
+                projectDescription: formData.get('projectDescription'),
+                hearAboutUs: formData.get('hearAboutUs'),
+                newsletter: formData.get('newsletter') === 'on',
+                terms: formData.get('terms') === 'on'
+            };
+
+            // Store in localStorage
+            let registrations = JSON.parse(localStorage.getItem('clientRegistrations') || '[]');
+            registrations.push(registrationData);
+            localStorage.setItem('clientRegistrations', JSON.stringify(registrations));
+
+            // Show success message
+            alert('Thank you for registering! We have received your information and will contact you within 24 hours to discuss your project requirements.');
+            
+            // Reset form
+            this.reset();
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Form validation enhancement
+        document.getElementById('email').addEventListener('blur', function() {
+            const email = this.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email && !emailRegex.test(email)) {
+                this.setCustomValidity('Please enter a valid email address');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+
+        document.getElementById('phone').addEventListener('blur', function() {
+            const phone = this.value.replace(/\s/g, '');
+            const phoneRegex = /^(\+61|0)[2-9]\d{8}$/;
+            if (phone && !phoneRegex.test(phone)) {
+                this.setCustomValidity('Please enter a valid Australian phone number');
+            } else {
+                this.setCustomValidity('');
+            }
         });
     </script>
 </body>
