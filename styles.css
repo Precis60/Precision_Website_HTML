@@ -387,6 +387,25 @@ body {
     font-weight: bold;
 }
 
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.service-section {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
+}
+@media (max-width: 900px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+}
+
+}
+
 @media (max-width: 900px) {
     .grid-sections {
         grid-template-columns: 1fr 1fr;
