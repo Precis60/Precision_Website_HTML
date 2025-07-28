@@ -399,11 +399,33 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   margin-bottom: 2rem;
 }
+
+.intro-section {
+  width: 100%;
+  background: #f8f8f8;
+  padding: 40px 0;
+}
+.intro-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.intro-section h2 {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.intro-section p {
+  font-size: 1.15em;
+  line-height: 1.7;
+  text-align: center;
+}
+
+
 @media (max-width: 900px) {
   .services-grid {
     grid-template-columns: 1fr;
-}
-
 }
 
 @media (max-width: 900px) {
