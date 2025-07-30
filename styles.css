@@ -400,6 +400,7 @@ body {
   margin-bottom: 2rem;
 }
 
+/* Into Section Block styling */
 .intro-section {
   width: 100%;
   background: #f8f8f8;
@@ -422,6 +423,28 @@ body {
   text-align: center;
 }
 
+/* Main Block Section Full Width styling */
+.blockfull-section {
+  width: 100%;
+  background: #f8f8f8;
+  padding: 40px 0;
+}
+.blockfull-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.blockfull-section h2 {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.blockfull-section p {
+  font-size: 1.15em;
+  line-height: 1.7;
+  text-align: center;
+}
 
 @media (max-width: 900px) {
   .services-grid {
