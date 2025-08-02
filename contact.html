@@ -216,7 +216,8 @@
 
         // Initialize EmailJS
         (function() {
-            emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+            // TODO: Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key from https://www.emailjs.com/
+            emailjs.init("YOUR_PUBLIC_KEY"); // Get this from EmailJS dashboard
         })();
 
         // Client Registration Form Handler
@@ -251,7 +252,7 @@
 
             // Prepare email template parameters
             const templateParams = {
-                to_email: 'jamie@projectconsultants.org',
+                to_email: 'precis60@precisionautomation.org',
                 from_name: `${registrationData.firstName} ${registrationData.lastName}`,
                 client_name: `${registrationData.firstName} ${registrationData.lastName}`,
                 client_email: registrationData.email,
@@ -271,6 +272,7 @@
             };
 
             // Send email using EmailJS
+            // TODO: Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with actual values from EmailJS dashboard
             emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
@@ -301,7 +303,7 @@
                     document.getElementById('mailtoFallback').style.display = 'inline-block';
                     document.getElementById('mailtoFallback').onclick = () => sendViaMailto(registrationData);
                     
-                    alert('We encountered an issue sending the email automatically. Please use the "Send via Email Client" button below, or contact us directly at jamie@projectconsultants.org or call 0413 729 663.');
+                    alert('We encountered an issue sending the email automatically. Please use the "Send via Email Client" button below, or contact us directly at precis60@precisionautomation.org or call 0413 729 663.');
                 })
                 .finally(function() {
                     // Reset button state
@@ -337,7 +339,7 @@ Newsletter subscription: ${registrationData.newsletter}
 Submitted: ${registrationData.timestamp}
             `);
             
-            const mailtoLink = `mailto:jamie@projectconsultants.org?subject=${subject}&body=${body}`;
+            const mailtoLink = `mailto:precis60@precisionautomation.org?subject=${subject}&body=${body}`;
             window.open(mailtoLink, '_blank');
         }
 
