@@ -84,7 +84,7 @@
 
 .header a:hover,
 .header a:focus {
-    background-color: transparent;
+    background-color: transparent !important;
     color: #1a237e;
     outline: none;
 }
@@ -187,6 +187,13 @@
         font-size: 18px;
         border-radius: 4px;
         transition: background 0.3s, color 0.3s;
+    }
+
+    .header-right a:hover,
+    .header-right a:focus {
+        background-color: transparent !important;
+        color: #1a237e;
+        outline: none;
     }
 
     .header-right.open {
