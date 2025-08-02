@@ -1,4 +1,4 @@
-// Smooth scroll for navigation links
+// Smooth scroll functionality
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -8,7 +8,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Intersection Observer for fade-in animations
+// Animation on scroll
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -19,8 +19,10 @@ const observer = new IntersectionObserver((entries) => {
     threshold: 0.1
 });
 
-document.querySelectorAll('.animate-on-scroll').forEach((element) => {
-    observer.observe(element);
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.animate-on-scroll').forEach((element) => {
+        observer.observe(element);
+    });
 });
 
 // Responsive navigation menu

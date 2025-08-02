@@ -7,6 +7,9 @@
     <title>Home | Precision Cabling & Automation</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="index.css">
+    <link href="css/modern-styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script defer src="js/modern-features.js"></script>
 </head>
 
 <body>
@@ -42,7 +45,30 @@
         </div>
     </div>
 
+    <!-- Modern Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">Precision</div>
+            <div class="nav-menu">
+                <a href="#home" class="button">Home</a>
+                <a href="#services" class="button">Services</a>
+                <a href="#contact" class="button">Contact</a>
+            </div>
+        </div>
+    </nav>
+
     <main>
+
+        <!-- Hero Section -->
+        <section id="home" class="animate-on-scroll">
+            <div class="container">
+                <div class="modern-card">
+                    <h1>Welcome to Precision</h1>
+                    <p>Your trusted partner in precision engineering</p>
+                    <a href="#contact" class="button">Get Started</a>
+                </div>
+            </div>
+        </section>
 
         <div class="grid-sections">
             <section>
@@ -119,17 +145,38 @@
                 </p>
             </section>
         </div>
+
+        <!-- Services Section -->
+        <section id="services" class="animate-on-scroll">
+            <div class="container">
+                <div class="modern-card">
+                    <h2>Our Services</h2>
+                    <!-- Add your services content here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="animate-on-scroll">
+            <div class="container">
+                <div class="modern-card">
+                    <h2>Contact Us</h2>
+                    <!-- Add your contact form or information here -->
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="site-footer">
         <div class="footer-content">
             <span>Precision Cabling & Automation | ABN: 94 921 400 822 | Mobile: 0413 729 663</span>
-            <span><a href="contact.html" class="footer-link">Contact Us</a> | <a href="about.html" class="footer-link">Privacy Policy</a></span>
+            <span><a href="contact.html" class="footer-link">Contact Us</a> | <a href="about.html"
+                    class="footer-link">Privacy Policy</a></span>
         </div>
     </footer>
 
     <script>
-        document.getElementById('menuToggle').addEventListener('click', function() {
+        document.getElementById('menuToggle').addEventListener('click', function () {
             var menu = document.getElementById('dropdownMenu');
             menu.classList.toggle('open');
         });
