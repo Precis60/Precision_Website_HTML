@@ -84,7 +84,7 @@
 
 .header a:hover,
 .header a:focus {
-    background-color: #e0e0e0;
+    background-color: transparent;
     color: #1a237e;
     outline: none;
 }
