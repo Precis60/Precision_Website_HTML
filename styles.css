@@ -333,10 +333,10 @@ body {
 
 /* Footer content styling */
 .site-footer {
-    background-color: #03f3d7;
+    background: linear-gradient(135deg, var(--primary-700) 0%, var(--primary-600) 100%);
     padding: 6px 0;
     text-align: center;
-    border-top: 2px solid #000;
+    border-top: 1px solid var(--primary-500);
     position: fixed;
     bottom: 0;
     left: 0;
@@ -344,10 +344,11 @@ body {
     width: 100%;
     z-index: 1001;
     box-sizing: border-box;
+    box-shadow: 0 -4px 20px rgba(30, 58, 138, 0.15);
 }
 
 .footer-content {
-    color: #000;
+    color: var(--surface-primary);
     font-size: 1.1em;
     line-height: 1.4;
     display: flex;
@@ -355,6 +356,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 1px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .footer-content span {
@@ -363,14 +365,15 @@ body {
 }
 
 .footer-link {
-    color: #000;
+    color: var(--surface-primary);
     text-decoration: underline;
-    transition: color 0.2s;
+    transition: all 0.3s ease;
 }
 
 .footer-link:hover,
 .footer-link:focus {
-    color: #1a237e;
+    color: var(--primary-100);
+    text-decoration: none;
 }
 
 /* Grid content styling */
