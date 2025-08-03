@@ -1543,3 +1543,25 @@ html {
         min-width: 180px;
     }
 }
+
+/* Feature list styling */
+.feature-list {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.feature-list li {
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-sm);
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-light-grey);
+  border-radius: var(--border-radius-sm);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.feature-list li strong {
+  color: var(--color-dark-blue);
+}
