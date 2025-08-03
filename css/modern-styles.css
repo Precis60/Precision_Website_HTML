@@ -183,6 +183,14 @@ body {
     margin-bottom: 1rem;
 }
 
+main {
+    margin-bottom: 15px;
+}
+
+.site-footer {
+    margin-top: 0;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 0 0.5rem;
