@@ -1474,6 +1474,12 @@ html {
     transform: translateY(0);
 }
 
+/* Hero section should be visible immediately */
+#home.animate-on-scroll {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* Hero Section Specific Styling */
 #home .modern-card {
     background: linear-gradient(135deg, var(--surface-primary) 0%, var(--primary-50) 100%);

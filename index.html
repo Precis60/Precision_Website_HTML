@@ -77,7 +77,7 @@
 
         <!-- Main Content Sections -->
     
-        <section class="content-section animate-on-scroll">
+        <section class="content-section animate-on-scroll visible">
             <div class="container">
                 <div class="modern-card">
                     <h2>Security & Access Control</h2>
@@ -102,7 +102,7 @@
             </div>
         </section>
 
-        <section class="content-section animate-on-scroll">
+        <section class="content-section animate-on-scroll visible">
             <div class="container">
                 <div class="modern-card">
                     <h2>CCTV & Intercom</h2>
@@ -127,7 +127,7 @@
             </div>
         </section>
 
-        <section class="content-section animate-on-scroll">
+        <section class="content-section animate-on-scroll visible">
             <div class="container">
                 <div class="modern-card">
                     <h2>Network & IT</h2>
@@ -145,7 +145,7 @@
             </div>
         </section>
 
-        <section class="content-section animate-on-scroll">
+        <section class="content-section animate-on-scroll visible">
             <div class="container">
                 <div class="modern-card">
                     <h2>Electrical & Automation</h2>
@@ -162,7 +162,7 @@
             </div>
         </section>
 
-        <section class="content-section animate-on-scroll">
+        <section class="content-section animate-on-scroll visible">
             <div class="container">
                 <div class="modern-card">
                     <h2>About Us</h2>
@@ -207,8 +207,13 @@
             });
         }
 
+        // Run animation check immediately when DOM is loaded
+        document.addEventListener('DOMContentLoaded', animateOnScroll);
         window.addEventListener('scroll', animateOnScroll);
         window.addEventListener('load', animateOnScroll);
+        
+        // Run immediately in case DOMContentLoaded already fired
+        animateOnScroll();
     </script>
 
 </body>
