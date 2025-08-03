@@ -7,9 +7,7 @@
     <title>Home | Precision Cabling & Automation</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="index.css">
-    <link href="css/modern-styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script defer src="js/modern-features.js"></script>
 </head>
 
 <body>
@@ -45,18 +43,6 @@
         </div>
     </div>
 
-    <!-- Modern Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">Precision</div>
-            <div class="nav-menu">
-                <a href="#home" class="button">Home</a>
-                <a href="#services" class="button">Services</a>
-                <a href="#contact" class="button">Contact</a>
-            </div>
-        </div>
-    </nav>
-
     <main>
 
         <!-- Hero Section -->
@@ -82,7 +68,10 @@
                         and
                         customer satisfaction, we are your trusted partner for all your structured cabling, network, and
                         automation needs.</p>
-                    <a href="contact.html#new-client-registration" class="button">Get Started</a>
+                    <a href="contact.html#new-client-registration" class="button large">
+                        <span class="icon">🚀</span>
+                        Get Started Today
+                    </a>
                 </div>
             </div>
         </section>
@@ -205,6 +194,22 @@
             var menu = document.getElementById('dropdownMenu');
             menu.classList.toggle('open');
         });
+
+        // Simple scroll animation
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
     </script>
 
 </body>
