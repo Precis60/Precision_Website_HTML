@@ -1194,13 +1194,7 @@ body::before {
         0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-/* Content Section Classes - Modern Design */
-.content-section {
-    width: 100%;
-    background: var(--surface-primary);
-    padding: var(--space-2) 0;
-}
-
+/* Content Container and Section Title Classes */
 .content-container {
     max-width: 1200px;
     margin: 0 auto;
